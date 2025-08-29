@@ -1,0 +1,1 @@
+clase board: se elige esta clase para representar al tablero. Tiene como atributo a positions y a el metodo board_inicial, se eligieron estos atributos para representar al tablero y las posiciones iniciales de las fichas.
