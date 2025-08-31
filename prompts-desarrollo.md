@@ -5,5 +5,17 @@ Usá diccionarios si querés más claridad y facilidad para etiquetar propiedade
 La salida fue utilizada con cambios, se utilizo una lista de diccionarios.
 referencia: core/board.py
 
+Chat gpt - version 4.1
+Texto exacto del prompt: "Como hago para que tome un valor aleatorio el dado en un codigo de backgammon en python"
+Respuesta de la ia: "import random
+dado1 = random.randint(1, 6)
+dado2 = random.randint(1, 6)
+print(dado1, dado2)"
+La salida fue utilizada con cambios, se implemento tambien el caso de dados que dieron el mismo numero.
+referencia: core/dice.py
 
-
+Chat gpt - version 4.1
+Texto exacto del prompt: "a que se refiere camelcase en programacion en python?"
+Respuesta de la ia: "En programación (incluido Python), CamelCase es una convención para nombrar identificadores (variables, funciones, clases, etc.) donde las palabras se escriben pegadas y cada palabra comienza con mayúscula (excepto a veces la primera)."
+La salida fue utilizada (no es codigo).
+referencia: core/
