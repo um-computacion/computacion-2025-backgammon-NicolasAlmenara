@@ -1,3 +1,3 @@
 clase board: se elige esta clase para representar al tablero. Tiene como atributo a positions y a el metodo board_inicial, se eligieron estos atributos para representar al tablero y las posiciones iniciales de las fichas.
 
-clase dice: se elige esta clase para representar a los dados. Tiene como atributo value1, value2 y doubles, representando los valores de los dos dados y doubles sera true cuando cuando los dados den el mismo valor y sera false cuando no.
+clase dice: se elige esta clase para representar a los dados. Tiene como atributo value1, value2 y doubles, representando los valores de los dos dados y doubles sera true cuando los dados den el mismo valor y sera false cuando no.
