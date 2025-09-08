@@ -10,3 +10,18 @@ class Checker:
         elif estado == "fuera":
             Checker.off_counts[self.color] += 1
             self.estado = "fuera"
+    
+    def to_bar(self):
+        if self.estado == "tablero":
+            Checker.bar_counts[self.color] += 1
+            self.estado = "barra"
+
+    def to_board(self):
+        if self.estado == "barra":
+            Checker.bar_counts[self.color] -= 1
+            self.estado = "tablero"
+
+    def to_off(self):
+        if self.estado == "tablero":
+            Checker.off_counts[self.color] += 1
+            self.estado = "fuera"
