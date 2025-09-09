@@ -25,3 +25,10 @@ class Checker:
         if self.estado == "tablero":
             Checker.off_counts[self.color] += 1
             self.estado = "fuera"
+    @classmethod
+    def get_bar_count(cls, color):
+        return cls.bar_counts[color]
+
+    @classmethod
+    def get_off_count(cls, color):
+        return cls.off_counts[color]

@@ -4,5 +4,5 @@
 - se implmenta la clase "dice" y tambien los metodos "roll", "get_values" y "is_double" y sus respectivos test. (29-8-2025)
 - se implementa la clase checker. (2-9-2025)
 - se implementa el constructor de la clase checker
-- se implementa los metodos to-bar, to-board y to-off.
-
+- se implementan los metodos to-bar, to-board y to-off. (8-9-2025)
+- se implementan los metodos get_bar_count, get_off_count
