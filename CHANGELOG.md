@@ -5,4 +5,5 @@
 - se implementa la clase checker. (2-9-2025)
 - se implementa el constructor de la clase checker
 - se implementan los metodos to-bar, to-board y to-off. (8-9-2025)
-- se implementan los metodos get_bar_count, get_off_count
+- se implementan los metodos get_bar_count, get_off_count. (9-9-2025)
+- se implementan test de checker. (13-9-2025)
