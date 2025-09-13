@@ -9,6 +9,19 @@ class TestChecker(unittest.TestCase):
         c = Checker("white", "barra")
         self.assertEqual(Checker.get_bar_count("white"), 1)
         self.assertEqual(Checker.get_bar_count("black"), 0)
+        
+    def test_init_off(self):
+        c = Checker("black", "fuera")
+        self.assertEqual(Checker.get_off_count("black"), 1)
+        self.assertEqual(Checker.get_off_count("white"), 0)
+
+    def test_to_bar_and_to_board(self):
+        c = Checker("white")
+        c.to_bar()
+        self.assertEqual(Checker.get_bar_count("white"), 1)
+        c.to_board()
+        self.assertEqual(Checker.get_bar_count("white"), 0)
+
 
 if __name__ == "__main__":
     unittest.main()

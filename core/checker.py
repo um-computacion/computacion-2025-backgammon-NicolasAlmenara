@@ -32,3 +32,8 @@ class Checker:
     @classmethod
     def get_off_count(cls, color):
         return cls.off_counts[color]
+    
+    @classmethod
+    def reset_counts(cls):
+        cls.bar_counts = {"white": 0, "black": 0}
+        cls.off_counts = {"white": 0, "black": 0}
