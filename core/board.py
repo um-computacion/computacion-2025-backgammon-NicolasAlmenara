@@ -12,3 +12,19 @@ class Board:
         self.positions[11] = {"color": "black", "count": 5}
         self.positions[16] = {"color": "black", "count": 3}
         self.positions[18] = {"color": "black", "count": 5}
+        
+    def move_checker(self, from_pos, to_pos, color):
+        if self.positions[from_pos]["color"] != color or self.positions[from_pos]["count"] == 0:
+            return False
+        if self.positions[to_pos]["color"] and self.positions[to_pos]["color"] != color and self.positions[to_pos]["count"] == 1:
+            self.positions[to_pos] = {"color": color, "count": 1}
+        else:
+            if self.positions[to_pos]["color"] in [None, color]:
+                self.positions[to_pos]["color"] = color
+                self.positions[to_pos]["count"] += 1
+            else:
+                return False
+        self.positions[from_pos]["count"] -= 1
+        if self.positions[from_pos]["count"] == 0:
+            self.positions[from_pos]["color"] = None
+        return True
