@@ -28,3 +28,14 @@ class Board:
         if self.positions[from_pos]["count"] == 0:
             self.positions[from_pos]["color"] = None
         return True
+    
+    def bear_off_checker(self, from_pos, color):
+        if self.positions[from_pos]["color"] == color and self.positions[from_pos]["count"] > 0:
+            self.positions[from_pos]["count"] -= 1
+            if self.positions[from_pos]["count"] == 0:
+                self.positions[from_pos]["color"] = None
+            return True
+        return False
+
+    def get_position(self, pos):
+        return self.positions[pos]
