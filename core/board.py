@@ -39,3 +39,19 @@ class Board:
 
     def get_position(self, pos):
         return self.positions[pos]
+        
+    def is_move_valid(self, from_pos, to_pos, color):
+        if from_pos < 0 or from_pos > 23 or to_pos < 0 or to_pos > 23:
+            return False
+        if self.positions[from_pos]["color"] != color or self.positions[from_pos]["count"] == 0:
+            return False
+        if self.positions[to_pos]["color"] not in [None, color] and self.positions[to_pos]["count"] > 1:
+            return False
+        return True
+
+    def show_board(self):
+        for i, pos in enumerate(self.positions):
+            color = pos["color"] if pos["color"] else "vacío"
+            print(f"{i:2}: {color} x{pos['count']}", end=" | ")
+            if (i + 1) % 6 == 0:
+                print()
