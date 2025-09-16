@@ -1,6 +1,9 @@
 import unittest
 from core.board import Board
 class Test_Board(unittest.TestCase):
+    
+    def setUp(self):
+        self.b = Board()
     def test_board_inicial(self):
         b = Board()
         b.board_inicial()
@@ -18,6 +21,14 @@ class Test_Board(unittest.TestCase):
         self.assertEqual(b.positions[5]["count"], 5)
         self.assertEqual(b.positions[18]["color"], "black")
         self.assertEqual(b.positions[18]["count"], 5)
-        
+
+    def test_move_checker_valid(self):
+        self.b.positions[22] = {"color": None, "count": 0}
+        result = self.b.move_checker(23, 22, "white")
+        self.assertTrue(result)
+        self.assertEqual(self.b.positions[22]["color"], "white")
+        self.assertEqual(self.b.positions[22]["count"], 1)
+        self.assertEqual(self.b.positions[23]["count"], 1)
+
 if __name__ == "__main__":
     unittest.main()
