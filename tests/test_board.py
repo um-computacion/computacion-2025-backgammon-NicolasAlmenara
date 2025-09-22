@@ -29,6 +29,10 @@ class Test_Board(unittest.TestCase):
         self.assertEqual(self.b.positions[22]["color"], "white")
         self.assertEqual(self.b.positions[22]["count"], 1)
         self.assertEqual(self.b.positions[23]["count"], 1)
+    
+    def test_move_checker_invalid(self):
+        result = self.b.move_checker(1, 2, "white")
+        self.assertFalse(result)
 
 if __name__ == "__main__":
     unittest.main()
