@@ -59,6 +59,12 @@ class Test_Board(unittest.TestCase):
         self.b.positions[23] = {"color": "black", "count": 2}
         result = self.b.move_checker(23, 22, "white")
         self.assertFalse(result)
-        
+
+    def test_move_checker_to_pos_ocupado(self):
+        self.b.positions[23] = {"color": "white", "count": 2}
+        self.b.positions[22] = {"color": "black", "count": 2}
+        result = self.b.move_checker(23, 22, "white")
+        self.assertFalse(result)
+
 if __name__ == "__main__":
     unittest.main()
