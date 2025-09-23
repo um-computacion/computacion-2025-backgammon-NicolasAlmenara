@@ -42,6 +42,11 @@ class Test_Board(unittest.TestCase):
         self.assertTrue(result)
         self.assertEqual(self.b.positions[23]["count"], 0)
         self.assertIsNone(self.b.positions[23]["color"])
+    
+    def test_get_position(self):
+        pos = self.b.get_position(23)
+        self.assertEqual(pos["color"], "white")
+        self.assertEqual(pos["count"], 2)
         
 if __name__ == "__main__":
     unittest.main()
