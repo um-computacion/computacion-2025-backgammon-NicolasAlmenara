@@ -47,6 +47,18 @@ class Test_Board(unittest.TestCase):
         pos = self.b.get_position(23)
         self.assertEqual(pos["color"], "white")
         self.assertEqual(pos["count"], 2)
+
+    def test_is_move_valid(self):
+        self.b.positions[22] = {"color": None, "count": 0}
+        self.assertTrue(self.b.is_move_valid(23, 22, "white"))
+        self.assertFalse(self.b.is_move_valid(1, 2, "white"))
+        self.b.positions[11] = {"color": "black", "count": 2}
+        self.assertFalse(self.b.is_move_valid(23, 11, "white"))
+
+    def test_move_checker_invalid_color(self):
+        self.b.positions[23] = {"color": "black", "count": 2}
+        result = self.b.move_checker(23, 22, "white")
+        self.assertFalse(result)
         
 if __name__ == "__main__":
     unittest.main()
