@@ -66,5 +66,12 @@ class Test_Board(unittest.TestCase):
         result = self.b.move_checker(23, 22, "white")
         self.assertFalse(result)
 
+    def test_bear_off_checker_success(self):
+        self.b.positions[5] = {"color": "white", "count": 1}
+        result = self.b.bear_off_checker(5, "white")
+        self.assertTrue(result)
+        self.assertEqual(self.b.positions[5]["count"], 0)
+        self.assertIsNone(self.b.positions[5]["color"])
+        
 if __name__ == "__main__":
     unittest.main()
