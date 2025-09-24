@@ -72,6 +72,21 @@ class Test_Board(unittest.TestCase):
         self.assertTrue(result)
         self.assertEqual(self.b.positions[5]["count"], 0)
         self.assertIsNone(self.b.positions[5]["color"])
-        
+
+    def test_bear_off_checker_fail(self):
+        self.b.positions[5] = {"color": "black", "count": 1}
+        result = self.b.bear_off_checker(5, "white")
+        self.assertFalse(result)
+
+    def test_get_position(self):
+        pos = self.b.get_position(23)
+        self.assertEqual(pos, self.b.positions[23])
+
+    def test_is_move_valid_out_of_bounds(self):
+        result = self.b.is_move_valid(-1, 22, "white")
+        self.assertFalse(result)
+        result = self.b.is_move_valid(23, 24, "white")
+        self.assertFalse(result)
+
 if __name__ == "__main__":
     unittest.main()
