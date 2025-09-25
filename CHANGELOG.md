@@ -8,3 +8,7 @@
 - se implementan los metodos get_bar_count, get_off_count. (9-9-2025)
 - se implementan test de checker. (13-9-2025)
 - se implementa la clase player, su metodo y los test. (14-9-2025)
+- se implementan nuevos metodos a la clase board. (15-9-2025)
+- se implementan nuevos test a la clase board. (22-9-2025)
+- se implementan nuevos test a la clase board. (23-9-2025)
+- se implementan nuevos test a la clase board. (24-9-2025)
