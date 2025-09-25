@@ -88,5 +88,16 @@ class Test_Board(unittest.TestCase):
         result = self.b.is_move_valid(23, 24, "white")
         self.assertFalse(result)
 
+    def test_is_move_valid_wrong_color(self):
+        self.b.positions[23] = {"color": "black", "count": 1}
+        result = self.b.is_move_valid(23, 22, "white")
+        self.assertFalse(result)
+
+    def test_is_move_valid_to_pos_with_two_opponent(self):
+        self.b.positions[23] = {"color": "white", "count": 1}
+        self.b.positions[22] = {"color": "black", "count": 2}
+        result = self.b.is_move_valid(23, 22, "white")
+        self.assertFalse(result)
+
 if __name__ == "__main__":
     unittest.main()
