@@ -1,15 +1,85 @@
-###added:
-- se implementa la clase "board" y tambien el metodo "board_inicial". (27-8-2025)
-- Se implementan los test del metodo "board_inicial". (27-8-2025)
-- se implmenta la clase "dice" y tambien los metodos "roll", "get_values" y "is_double" y sus respectivos test. (29-8-2025)
-- se implementa la clase checker. (2-9-2025)
-- se implementa el constructor de la clase checker
-- se implementan los metodos to-bar, to-board y to-off. (8-9-2025)
-- se implementan los metodos get_bar_count, get_off_count. (9-9-2025)
-- se implementan test de checker. (13-9-2025)
-- se implementa la clase player, su metodo y los test. (14-9-2025)
-- se implementan nuevos metodos a la clase board. (15-9-2025)
-- se implementan nuevos test a la clase board. (22-9-2025)
-- se implementan nuevos test a la clase board. (23-9-2025)
-- se implementan nuevos test a la clase board. (24-9-2025)
-- se implementa el archivo .coveragerc y tambien se arreglan los reportes de integracion continua. (27-9-2020)
+# Changelog
+Todos los cambios van a estar registtrados en este archivo
+El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## [Unreleased]
+
+---
+
+## [0.0.14] - 2025-09-27
+### Added
+- Archivo `.coveragerc`.
+### Fixed
+- Reportes de integración continua.
+
+---
+
+## [0.0.13] - 2025-09-24
+### Added
+- Nuevos tests para la clase `board`.
+
+---
+
+## [0.0.12] - 2025-09-23
+### Added
+- Nuevos tests para la clase `board`.
+
+---
+
+## [0.0.11] - 2025-09-22
+### Added
+- Nuevos tests para la clase `board`.
+
+---
+
+## [0.0.10] - 2025-09-15
+### Added
+- Nuevos métodos a la clase `board`.
+
+---
+
+## [0.0.9] - 2025-09-14
+### Added
+- Clase `player`, su método principal y los tests correspondientes.
+
+---
+
+## [0.0.8] - 2025-09-13
+### Added
+- Tests para la clase `checker`.
+
+---
+
+## [0.0.7] - 2025-09-09
+### Added
+- Métodos `get_bar_count` y `get_off_count` en la clase `checker`.
+
+---
+
+## [0.0.6] - 2025-09-08
+### Added
+- Métodos `to_bar`, `to_board` y `to_off` en la clase `checker`.
+
+---
+
+## [0.0.5] - 2025-09-02
+### Added
+- Clase `checker` y su constructor.
+
+---
+
+## [0.0.4] - 2025-08-29
+### Added
+- Clase `dice` con métodos `roll`, `get_values`, `is_double` y sus respectivos tests.
+
+---
+
+## [0.0.3] - 2025-08-27
+### Added
+- Tests para el método `board_inicial`.
+
+---
+
+## [0.0.2] - 2025-08-27
+### Added
+- Clase `board` y método `board_inicial`.
