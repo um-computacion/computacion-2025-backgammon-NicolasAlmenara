@@ -15,3 +15,22 @@ Cantidad de tiradas: que el resultado siempre sea una tupla de dos números (o c
 Determinismo con semilla: que si se fija la semilla de random, el resultado sea reproducible (sirve para tests automáticos)."
 La salida fue utilizada solo en cuanto a rango valido.
 referencia: tests/test_dice.py
+
+Chat Gpt - version GPT-5 mini
+Texto exacto del prompt: "que debe tener ela archivo .coveragerc para que no tega en cuenta los mismo test"
+Respuesta de la ia: "[run]
+omit =
+    tests/*
+    */__pycache__/*
+    __pycache__/*
+    assets/*
+    */cli.py
+    */pygame_ui/*
+    */prompts-*.md
+    */README.md
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:"
+La salida fue utilizada sin cambios.
+referencia: .coveragerc

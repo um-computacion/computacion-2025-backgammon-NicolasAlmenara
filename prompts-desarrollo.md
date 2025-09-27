@@ -19,3 +19,14 @@ Texto exacto del prompt: "a que se refiere camelcase en programacion en python?"
 Respuesta de la ia: "En programación (incluido Python), CamelCase es una convención para nombrar identificadores (variables, funciones, clases, etc.) donde las palabras se escriben pegadas y cada palabra comienza con mayúscula (excepto a veces la primera)."
 La salida fue utilizada (no es codigo).
 referencia: core/
+
+Chat Gpt - version GPT-5 mini
+Texto exacto del prompt: "deme un metodo para mostrar el siguiente tablero de un backgammon (pegue mi codigo del tablero)"
+Respuesta de la ia: "    def show_board(self):
+        for i, pos in enumerate(self.positions):
+            color = pos["color"] if pos["color"] else "vacío"
+            print(f"{i:2}: {color} x{pos['count']}", end=" | ")
+            if (i + 1) % 6 == 0:
+                print()"
+La salida fue utilizada sin cambios.
+referencia: core/board.py
