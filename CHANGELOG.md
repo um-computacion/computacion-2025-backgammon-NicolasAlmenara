@@ -12,4 +12,4 @@
 - se implementan nuevos test a la clase board. (22-9-2025)
 - se implementan nuevos test a la clase board. (23-9-2025)
 - se implementan nuevos test a la clase board. (24-9-2025)
-- se implementa el archivo .coveragerc y tambien se arreglan los reportes de integracion continua.
+- se implementa el archivo .coveragerc y tambien se arreglan los reportes de integracion continua. (27-9-2020)
