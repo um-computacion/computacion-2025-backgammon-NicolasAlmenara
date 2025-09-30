@@ -3,6 +3,12 @@ Todos los cambios van a estar registtrados en este archivo
 El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+---
+
+## [0.0.15] - 2025-09-29
+
+### Fixed
+- Se cambian los metodos de la clase `board`.
 
 ---
 
