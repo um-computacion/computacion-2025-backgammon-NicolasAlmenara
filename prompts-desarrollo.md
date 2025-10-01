@@ -23,48 +23,58 @@ referencia: core/
 Chat Gpt - version GPT-5 mini
 Texto exacto del prompt: "deme un metodo para mostrar el siguiente tablero de un backgammon (pegue mi codigo del tablero)"
 Respuesta de la ia: "    def show_board(self):
-        """Imprime el tablero con formato visual mostrando las fichas y posiciones."""
-        def format_point(pos):
-            if not self.__positions__[pos]["color"] or self.__positions__[pos]["count"] == 0:
-                return "  . "
-            
-            count = self.__positions__[pos]["count"]
-            color = self.__positions__[pos]["color"][0].upper()  # B o W
-            
-            if count <= 9:
-                return f" {color}{count} "
+        """Muestra el tablero"""
+        print("\n" + "="*70)
+        print("                    TABLERO DE BACKGAMMON")
+        print("="*70)
+        top_nums = "   "
+        for i in range(13, 25):
+            top_nums += f"{i:>3} "
+        print(top_nums)
+        top_line = "   "
+        for i in range(12, 24):
+            point = self.points[i]
+            if point[1] > 0:
+                letter = "W" if point[0] == "white" else "B"
+                top_line += f"{letter}{point[1]:>2} "
             else:
-                return f"{color}{count:2}"
+                top_line += " .  "
+        print(top_line)
         
-        print("\n" + "="*65)
-        print("TABLERO DE BACKGAMMON")
-        print("="*65)
+        print("   " + "-" * 48)
+        bar_info = ""
+        if self.bar["white"] > 0:
+            bar_info += f"W{self.bar['white']} "
+        if self.bar["black"] > 0:
+            bar_info += f"B{self.bar['black']} "
+        if not bar_info:
+            bar_info = "vacía"
+        print(f"BARRA: {bar_info:^42}")
         
-        print(" 13   14   15   16   17   18  |BAR|  19   20   21   22   23   24 |OFF|")
-        
-        print(f"{format_point(12)} {format_point(13)} {format_point(14)} {format_point(15)} {format_point(16)} {format_point(17)} |", end="")
-        
-        from core.checker import Checker
-        white_bar = Checker.get_bar_count("white")
-        black_bar = Checker.get_bar_count("black")
-        if white_bar > 0:
-            print(f" W{white_bar} ", end="")
-        elif black_bar > 0:
-            print(f" B{black_bar} ", end="")
-        else:
-            print("  . ", end="")
-        
-        print(f"| {format_point(18)} {format_point(19)} {format_point(20)} {format_point(21)} {format_point(22)} {format_point(23)} |   |")
-    
-        print(" " * 65)
-        print(" " * 65)
-        
-        print(f"{format_point(11)} {format_point(10)} {format_point(9)} {format_point(8)} {format_point(7)} {format_point(6)} | . | {format_point(5)} {format_point(4)} {format_point(3)} {format_point(2)} {format_point(1)} {format_point(0)} |   |")
-        
-        print(" 12   11   10    9    8    7  |   |   6    5    4    3    2    1 |   |")
-        
-        print("="*65)
-        print("B = Negro, W = Blanco, Número = cantidad de fichas")
-        print("="*65 + "\n")"
+        print("   " + "-" * 48)
+        bottom_line = "   "
+        for i in range(11, -1, -1):
+            point = self.points[i]
+            if point[1] > 0:
+                letter = "W" if point[0] == "white" else "B"
+                bottom_line += f"{letter}{point[1]:>2} "
+            else:
+                bottom_line += " .  "
+        print(bottom_line)
+        bottom_nums = "   "
+        for i in range(12, 0, -1):
+            bottom_nums += f"{i:>3} "
+        print(bottom_nums)
+        print()
+        off_info = f"FUERA - Blancas: {self.off['white']}  |  Negras: {self.off['black']}"
+        print(f"{off_info:^70}")
+        print("="*70)
+    def is_winner(self):
+        """Dice si hay un ganador"""
+        if self.off["white"] == 15:
+            return "white"
+        elif self.off["black"] == 15:
+            return "black"
+        return None"
 La salida fue utilizada sin cambios.
 referencia: core/board.py

@@ -5,10 +5,10 @@ El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 ---
 
-## [0.0.15] - 2025-09-29
+## [0.0.15] - 2025-10-1
 
 ### Fixed
-- Se cambian los metodos de la clase `board`.
+- Se cambian los metodos de la clase `board`, se modifica para que el codigo respete los principios SOLID.
 
 ---
 

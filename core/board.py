@@ -1,122 +1,112 @@
 class Board:
+    """El tablero del juego"""
     def __init__(self):
-        """Inicializa un tablero vacío y coloca las fichas en posición inicial."""
-        self.__positions__ = [{"color": None, "count": 0} for _ in range(24)]
-        self.setup_initial_position()
-
-    def setup_initial_position(self):
-        """Configura las posiciones iniciales de las fichas según las reglas del backgammon."""
-        self.__positions__[23] = {"color": "white", "count": 2}
-        self.__positions__[12] = {"color": "white", "count": 5}
-        self.__positions__[7]  = {"color": "white", "count": 3}
-        self.__positions__[5]  = {"color": "white", "count": 5}
-        self.__positions__[0]  = {"color": "black", "count": 2}
-        self.__positions__[11] = {"color": "black", "count": 5}
-        self.__positions__[16] = {"color": "black", "count": 3}
-        self.__positions__[18] = {"color": "black", "count": 5}
-        
+        """Crea el tablero en posición inicial"""
+        self.points = [["", 0] for _ in range(24)]
+        self.bar = {"white": 0, "black": 0}
+        self.off = {"white": 0, "black": 0}
+        self._setup_initial_position()
+    def _setup_initial_position(self):
+        """Configura la posición inicial del backgammon"""
+        self.points[0] = ["white", 2]
+        self.points[11] = ["white", 5]
+        self.points[16] = ["white", 3]
+        self.points[18] = ["white", 5]
+        self.points[23] = ["black", 2]
+        self.points[12] = ["black", 5]
+        self.points[7] = ["black", 3]
+        self.points[5] = ["black", 5]
+    def get_point(self, position):
+        """Obtiene la información de un punto"""
+        if 1 <= position <= 24:
+            return self.points[position - 1]
+        return None
     def move_checker(self, from_pos, to_pos, color):
-        """Mueve una ficha del color especificado desde from_pos hacia to_pos."""
+        """Mueve una ficha (sin validar)"""
         if from_pos == 25:
-            return self.move_from_bar(to_pos, color)
-            
-        if self.__positions__[from_pos]["color"] != color or self.__positions__[from_pos]["count"] == 0:
-            return False
-        if self.__positions__[to_pos]["color"] and self.__positions__[to_pos]["color"] != color and self.__positions__[to_pos]["count"] == 1:
-            self.__positions__[to_pos] = {"color": color, "count": 1}
+            self.bar[color] -= 1
         else:
-            if self.__positions__[to_pos]["color"] in [None, color]:
-                self.__positions__[to_pos]["color"] = color
-                self.__positions__[to_pos]["count"] += 1
-            else:
-                return False
-        self.__positions__[from_pos]["count"] -= 1
-        if self.__positions__[from_pos]["count"] == 0:
-            self.__positions__[from_pos]["color"] = None
-        return True
-
-    def move_from_bar(self, to_pos, color):
-        """Mueve una ficha desde la barra al tablero"""
-        if self.__positions__[to_pos]["color"] and self.__positions__[to_pos]["color"] != color and self.__positions__[to_pos]["count"] == 1:
-            self.__positions__[to_pos] = {"color": color, "count": 1}
-        elif self.__positions__[to_pos]["color"] in [None, color]:
-            self.__positions__[to_pos]["color"] = color
-            self.__positions__[to_pos]["count"] += 1
+            point = self.points[from_pos - 1]
+            point[1] -= 1
+            if point[1] == 0:
+                point[0] = ""
+        if to_pos == 0:
+            self.off[color] += 1
         else:
+            point = self.points[to_pos - 1]
+            if point[1] == 1 and point[0] != color and point[0] != "":
+                enemy_color = "white" if color == "black" else "black"
+                self.bar[enemy_color] += 1
+                point[1] = 0
+                point[0] = ""
+            point[0] = color
+            point[1] += 1
+    def has_checkers_on_bar(self, color):
+        """Dice si hay fichas en la barra"""
+        return self.bar[color] > 0
+    def can_bear_off(self, color):
+        """Dice si el jugador puede sacar fichas"""
+        if self.has_checkers_on_bar(color):
             return False
+        home_range = range(1, 7) if color == "white" else range(19, 25)
+        for i in range(24):
+            point = self.points[i]
+            if point[0] == color and point[1] > 0:
+                if (i + 1) not in home_range:
+                    return False
         return True
-
-    def bear_off_checker(self, from_pos, color):
-        """Saca una ficha del color especificado desde from_pos del tablero."""
-        if self.__positions__[from_pos]["color"] == color and self.__positions__[from_pos]["count"] > 0:
-            self.__positions__[from_pos]["count"] -= 1
-            if self.__positions__[from_pos]["count"] == 0:
-                self.__positions__[from_pos]["color"] = None
-            return True
-        return False
-
-    def get_position(self, pos):
-        """Retorna la información de la posición especificada del tablero."""
-        return self.__positions__[pos]
-
-    def is_move_valid(self, from_pos, to_pos, color):
-        """Verifica si un movimiento del color dado es válido según las reglas."""
-        if from_pos == 25:
-            if to_pos < 0 or to_pos > 23:
-                return False
-            if self.__positions__[to_pos]["color"] not in [None, color] and self.__positions__[to_pos]["count"] > 1:
-                return False
-            return True
-            
-        if from_pos < 0 or from_pos > 23 or to_pos < 0 or to_pos > 23:
-            return False
-        if self.__positions__[from_pos]["color"] != color or self.__positions__[from_pos]["count"] == 0:
-            return False
-        if self.__positions__[to_pos]["color"] not in [None, color] and self.__positions__[to_pos]["count"] > 1:
-            return False
-        return True
-
-    def show_board(self):
-        """Imprime el tablero con formato visual mostrando las fichas y posiciones."""
-        def format_point(pos):
-            if not self.__positions__[pos]["color"] or self.__positions__[pos]["count"] == 0:
-                return "  . "
-            
-            count = self.__positions__[pos]["count"]
-            color = self.__positions__[pos]["color"][0].upper()  # B o W
-            
-            if count <= 9:
-                return f" {color}{count} "
-            else:
-                return f"{color}{count:2}"
-        
-        print("\n" + "="*65)
-        print("TABLERO DE BACKGAMMON")
-        print("="*65)
-        
-        print(" 13   14   15   16   17   18  |BAR|  19   20   21   22   23   24 |OFF|")
-        
-        print(f"{format_point(12)} {format_point(13)} {format_point(14)} {format_point(15)} {format_point(16)} {format_point(17)} |", end="")
-        
-        from core.checker import Checker
-        white_bar = Checker.get_bar_count("white")
-        black_bar = Checker.get_bar_count("black")
-        if white_bar > 0:
-            print(f" W{white_bar} ", end="")
-        elif black_bar > 0:
-            print(f" B{black_bar} ", end="")
-        else:
-            print("  . ", end="")
-        
-        print(f"| {format_point(18)} {format_point(19)} {format_point(20)} {format_point(21)} {format_point(22)} {format_point(23)} |   |")
     
-        print(" " * 65)
-        print(" " * 65)
+    def show_board(self):
+        """Muestra el tablero"""
+        print("\n" + "="*70)
+        print("                    TABLERO DE BACKGAMMON")
+        print("="*70)
+        top_nums = "   "
+        for i in range(13, 25):
+            top_nums += f"{i:>3} "
+        print(top_nums)
+        top_line = "   "
+        for i in range(12, 24):
+            point = self.points[i]
+            if point[1] > 0:
+                letter = "W" if point[0] == "white" else "B"
+                top_line += f"{letter}{point[1]:>2} "
+            else:
+                top_line += " .  "
+        print(top_line)
         
-        print(f"{format_point(11)} {format_point(10)} {format_point(9)} {format_point(8)} {format_point(7)} {format_point(6)} | . | {format_point(5)} {format_point(4)} {format_point(3)} {format_point(2)} {format_point(1)} {format_point(0)} |   |")
+        print("   " + "-" * 48)
+        bar_info = ""
+        if self.bar["white"] > 0:
+            bar_info += f"W{self.bar['white']} "
+        if self.bar["black"] > 0:
+            bar_info += f"B{self.bar['black']} "
+        if not bar_info:
+            bar_info = "vacía"
+        print(f"BARRA: {bar_info:^42}")
         
-        print(" 12   11   10    9    8    7  |   |   6    5    4    3    2    1 |   |")
-        
-        print("="*65)
-        print("B = Negro, W = Blanco, Número = cantidad de fichas")
-        print("="*65 + "\n")
+        print("   " + "-" * 48)
+        bottom_line = "   "
+        for i in range(11, -1, -1):
+            point = self.points[i]
+            if point[1] > 0:
+                letter = "W" if point[0] == "white" else "B"
+                bottom_line += f"{letter}{point[1]:>2} "
+            else:
+                bottom_line += " .  "
+        print(bottom_line)
+        bottom_nums = "   "
+        for i in range(12, 0, -1):
+            bottom_nums += f"{i:>3} "
+        print(bottom_nums)
+        print()
+        off_info = f"FUERA - Blancas: {self.off['white']}  |  Negras: {self.off['black']}"
+        print(f"{off_info:^70}")
+        print("="*70)
+    def is_winner(self):
+        """Dice si hay un ganador"""
+        if self.off["white"] == 15:
+            return "white"
+        elif self.off["black"] == 15:
+            return "black"
+        return None
