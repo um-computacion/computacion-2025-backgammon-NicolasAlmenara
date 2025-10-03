@@ -34,3 +34,22 @@ exclude_lines =
     if __name__ == .__main__.:"
 La salida fue utilizada sin cambios.
 referencia: .coveragerc
+
+Claude sonet - version 4
+Texto exacto del prompt: "como puedo testear en un programa de backgammon mi show board (le envie mi codigo de show_board)"
+Respuesta de la ia: "    def test_show_board_runs(self):
+        """Verifica que show_board se ejecuta sin errores"""
+        import io
+        import sys
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+        try:
+            self.board.show_board()
+            success = True
+        except Exception:
+            success = False
+        finally:
+            sys.stdout = sys.__stdout__
+        self.assertTrue(success)"
+La salida fue utilizada sin cambios.
+referencia: tests/test_board.py

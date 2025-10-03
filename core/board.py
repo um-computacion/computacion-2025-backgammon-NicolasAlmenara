@@ -110,3 +110,4 @@ class Board:
         elif self.off["black"] == 15:
             return "black"
         return None
+        

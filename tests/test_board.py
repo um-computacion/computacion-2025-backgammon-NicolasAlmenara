@@ -1,7 +1,5 @@
 import unittest
 from core.board import Board
-import unittest
-from core.board import Board
 class TestBoard(unittest.TestCase):
     def setUp(self):
         self.board = Board()
@@ -98,5 +96,98 @@ class TestBoard(unittest.TestCase):
         point1 = self.board.get_point(1)
         self.assertEqual(point1[1], 1)
         self.assertEqual(self.board.off["white"], 1)
-if __name__ == "__main__":
+    def test_move_checker_clear_point(self):
+        """Verifica que se limpia un punto cuando queda vacío"""
+        self.board.move_checker(1, 2, "white")
+        self.board.move_checker(1, 3, "white")
+        point1 = self.board.get_point(1)
+        self.assertEqual(point1[0], "")
+        self.assertEqual(point1[1], 0)
+    def test_has_checkers_on_bar_initial(self):
+        """Verifica el estado inicial de la barra"""
+        self.assertFalse(self.board.has_checkers_on_bar("white"))
+        self.assertFalse(self.board.has_checkers_on_bar("black"))
+    def test_has_checkers_on_bar_with_checkers(self):
+        """Verifica detectar fichas en la barra"""
+        self.board.bar["white"] = 2
+        self.board.bar["black"] = 1
+        self.assertTrue(self.board.has_checkers_on_bar("white"))
+        self.assertTrue(self.board.has_checkers_on_bar("black"))
+    def test_has_checkers_on_bar_after_removal(self):
+        """Verifica el estado después de quitar fichas de la barra"""
+        self.board.bar["white"] = 1
+        self.assertTrue(self.board.has_checkers_on_bar("white"))
+        self.board.bar["white"] = 0
+        self.assertFalse(self.board.has_checkers_on_bar("white"))
+    def test_can_bear_off_initial_position(self):
+        """Verifica que no se puede sacar fichas en posición inicial"""
+        self.assertFalse(self.board.can_bear_off("white"))
+        self.assertFalse(self.board.can_bear_off("black"))
+    def test_can_bear_off_with_checkers_on_bar(self):
+        """Verifica que no se puede sacar fichas con fichas en la barra"""
+        self._setup_all_checkers_in_home("white")
+        self.board.bar["white"] = 1
+        self.assertFalse(self.board.can_bear_off("white"))
+    def test_can_bear_off_all_in_home_white(self):
+        """Verifica que se puede sacar fichas con todas en casa blanca"""
+        self._setup_all_checkers_in_home("white")
+        self.assertTrue(self.board.can_bear_off("white"))
+    def test_can_bear_off_all_in_home_black(self):
+        """Verifica que se puede sacar fichas con todas en casa negra"""
+        self._setup_all_checkers_in_home("black")
+        self.assertTrue(self.board.can_bear_off("black"))
+    def test_can_bear_off_with_checkers_outside_home(self):
+        """Verifica que no se puede sacar fichas con fichas fuera de casa"""
+        self._setup_all_checkers_in_home("white")
+        self.board.points[6] = ["white", 1]
+        self.assertFalse(self.board.can_bear_off("white"))
+    def test_is_winner_initial(self):
+        """Verifica que no hay ganador en posición inicial"""
+        self.assertIsNone(self.board.is_winner())
+    def test_is_winner_white_wins(self):
+        """Verifica la victoria de las blancas"""
+        self.board.off["white"] = 15
+        self.assertEqual(self.board.is_winner(), "white")
+    def test_is_winner_black_wins(self):
+        """Verifica la victoria de las negras"""
+        self.board.off["black"] = 15
+        self.assertEqual(self.board.is_winner(), "black")
+    def test_is_winner_partial_off(self):
+        """Verifica que no hay ganador con fichas parcialmente fuera"""
+        self.board.off["white"] = 14
+        self.board.off["black"] = 10
+        self.assertIsNone(self.board.is_winner())
+    def test_show_board_runs(self):
+        """Verifica que show_board se ejecuta sin errores"""
+        import io
+        import sys
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+        try:
+            self.board.show_board()
+            success = True
+        except Exception:
+            success = False
+        finally:
+            sys.stdout = sys.__stdout__
+        self.assertTrue(success)
+    def _setup_all_checkers_in_home(self, color):
+        for i in range(24):
+            self.board.points[i] = ["", 0]
+        self.board.bar[color] = 0
+        if color == "white":
+            self.board.points[0] = ["white", 3]
+            self.board.points[1] = ["white", 3]
+            self.board.points[2] = ["white", 3]
+            self.board.points[3] = ["white", 3]
+            self.board.points[4] = ["white", 2]
+            self.board.points[5] = ["white", 1]
+        else:
+            self.board.points[18] = ["black", 3]
+            self.board.points[19] = ["black", 3]
+            self.board.points[20] = ["black", 3]
+            self.board.points[21] = ["black", 3]
+            self.board.points[22] = ["black", 2]
+            self.board.points[23] = ["black", 1]
+if __name__ == '__main__':
     unittest.main()
