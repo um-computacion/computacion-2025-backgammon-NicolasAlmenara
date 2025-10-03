@@ -6,6 +6,13 @@ El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.0.17] - 2025-10-3
+
+### Removed
+- Se elimina la clase `checker`.
+
+---
+
 ## [0.0.16] - 2025-10-1
 
 ### Added
