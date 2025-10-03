@@ -8,6 +8,8 @@ El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.0.17] - 2025-10-3
 
+### Fixed
+- Se cambian los metodos de la clase `dice` y sus test, se modifica para que el codigo respete los principios SOLID.
 ### Removed
 - Se elimina la clase `checker`.
 
