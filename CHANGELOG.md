@@ -3,6 +3,10 @@ Todos los cambios van a estar registtrados en este archivo
 El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+## [0.0.17] - 2025-10-7
+
+### Added
+- Se agregan test para la nueva clase `player`.
 
 ---
 
@@ -18,7 +22,7 @@ El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [0.0.16] - 2025-10-1
 
 ### Added
-- Se agregan test mas test para la clase `board`.
+- Se agregan mas test para la clase `board`.
 
 ---
 
