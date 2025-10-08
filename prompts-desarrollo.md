@@ -23,10 +23,58 @@ referencia: core/
 Chat Gpt - version GPT-5 mini
 Texto exacto del prompt: "deme un metodo para mostrar el siguiente tablero de un backgammon (pegue mi codigo del tablero)"
 Respuesta de la ia: "    def show_board(self):
-        for i, pos in enumerate(self.positions):
-            color = pos["color"] if pos["color"] else "vacío"
-            print(f"{i:2}: {color} x{pos['count']}", end=" | ")
-            if (i + 1) % 6 == 0:
-                print()"
+        """Muestra el tablero"""
+        print("\n" + "="*70)
+        print("                    TABLERO DE BACKGAMMON")
+        print("="*70)
+        top_nums = "   "
+        for i in range(13, 25):
+            top_nums += f"{i:>3} "
+        print(top_nums)
+        top_line = "   "
+        for i in range(12, 24):
+            point = self.points[i]
+            if point[1] > 0:
+                letter = "W" if point[0] == "white" else "B"
+                top_line += f"{letter}{point[1]:>2} "
+            else:
+                top_line += " .  "
+        print(top_line)
+        
+        print("   " + "-" * 48)
+        bar_info = ""
+        if self.bar["white"] > 0:
+            bar_info += f"W{self.bar['white']} "
+        if self.bar["black"] > 0:
+            bar_info += f"B{self.bar['black']} "
+        if not bar_info:
+            bar_info = "vacía"
+        print(f"BARRA: {bar_info:^42}")
+        
+        print("   " + "-" * 48)
+        bottom_line = "   "
+        for i in range(11, -1, -1):
+            point = self.points[i]
+            if point[1] > 0:
+                letter = "W" if point[0] == "white" else "B"
+                bottom_line += f"{letter}{point[1]:>2} "
+            else:
+                bottom_line += " .  "
+        print(bottom_line)
+        bottom_nums = "   "
+        for i in range(12, 0, -1):
+            bottom_nums += f"{i:>3} "
+        print(bottom_nums)
+        print()
+        off_info = f"FUERA - Blancas: {self.off['white']}  |  Negras: {self.off['black']}"
+        print(f"{off_info:^70}")
+        print("="*70)
+    def is_winner(self):
+        """Dice si hay un ganador"""
+        if self.off["white"] == 15:
+            return "white"
+        elif self.off["black"] == 15:
+            return "black"
+        return None"
 La salida fue utilizada sin cambios.
 referencia: core/board.py
