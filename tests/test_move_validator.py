@@ -28,3 +28,18 @@ class TestMoveValidator(unittest.TestCase):
         self.assertFalse(result)
         result = self.validator.is_valid_move(0, 1, "white")
         self.assertFalse(result)
+    def test_invalid_destination_position(self):
+        """Prueba posiciones destino inválidas"""
+        result = self.validator.is_valid_move(1, 26, "white")
+        self.assertFalse(result)
+    def test_must_enter_from_bar_no_checkers(self):
+        """Prueba must_enter_from_bar cuando no hay fichas en barra"""
+        result = self.validator.must_enter_from_bar("white")
+        self.assertFalse(result)
+        result = self.validator.must_enter_from_bar("black")
+        self.assertFalse(result)
+    def test_must_enter_from_bar_with_checkers(self):
+        """Prueba must_enter_from_bar cuando hay fichas en barra"""
+        self.board.bar["white"] = 1
+        result = self.validator.must_enter_from_bar("white")
+        self.assertTrue(result)
