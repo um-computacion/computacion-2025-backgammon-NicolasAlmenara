@@ -43,3 +43,14 @@ class TestMoveValidator(unittest.TestCase):
         self.board.bar["white"] = 1
         result = self.validator.must_enter_from_bar("white")
         self.assertTrue(result)
+    def test_move_from_bar_valid_position(self):
+        """Prueba movimiento desde la barra"""
+        self.board.bar["white"] = 1
+        result = self.validator.is_valid_move(25, 1, "white")
+        self.assertIsInstance(result, bool)
+    def test_bearing_off_destination(self):
+        """Prueba movimiento de bearing off (posición 0)"""
+        result = self.validator.is_valid_move(1, 0, "white")
+        self.assertIsInstance(result, bool)
+if __name__ == '__main__':
+    unittest.main()

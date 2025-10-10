@@ -3,11 +3,17 @@ Todos los cambios van a estar registtrados en este archivo
 El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+## [0.0.20] - 2025-10-9
+
+### Added
+- Se crean los test de la clase `MoveValidator`.
+
+---
+
 ## [0.0.19] - 2025-10-8
 
 ### Added
 - Se crea la clase `MoveValidator`.
-
 
 ---
 
