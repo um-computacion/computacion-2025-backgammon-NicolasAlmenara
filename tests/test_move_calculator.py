@@ -35,3 +35,23 @@ class TestMoveCalculator(unittest.TestCase):
         self.assertEqual(result, 0)
         result = self.calculator.calculate_destination(5, 6, "black")
         self.assertEqual(result, 0)
+    def test_calculate_from_bar_white(self):
+        """Prueba cálculo desde barra para fichas blancas"""
+        result = self.calculator.calculate_destination(25, 3, "white")
+        self.assertEqual(result, 3)
+        
+        result = self.calculator.calculate_destination(25, 6, "white")
+        self.assertEqual(result, 6)
+    def test_calculate_from_bar_black(self):
+        """Prueba cálculo desde barra para fichas negras"""
+        result = self.calculator.calculate_destination(25, 3, "black")
+        self.assertEqual(result, 22)
+        
+        result = self.calculator.calculate_destination(25, 6, "black")
+        self.assertEqual(result, 19)
+    def test_can_bear_off_exact_white(self):
+        """Prueba bearing off exacto para fichas blancas"""
+        self.board.points[2] = ["white", 1]
+        
+        result = self.calculator.can_bear_off_exact_or_higher(3, 3, "white", self.board)
+        self.assertTrue(result)
