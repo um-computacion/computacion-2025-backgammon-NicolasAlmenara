@@ -3,6 +3,13 @@ Todos los cambios van a estar registtrados en este archivo
 El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+## [0.0.22] - 2025-10-11
+
+### Added
+- Se crea  la clase `GameStateManager`,sus metodos y sus test.
+
+---
+
 ## [0.0.21] - 2025-10-10
 
 ### Added
