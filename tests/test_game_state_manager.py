@@ -47,3 +47,30 @@ class TestGameStateManager(unittest.TestCase):
         self.manager.reset_game()
         self.assertFalse(self.manager.is_game_over())
         self.assertIsNone(self.manager.get_winner())
+    def test_game_state_persistence(self):
+        """Prueba que el estado se mantiene hasta el reset"""
+        self.board.off["black"] = 15
+        self.manager.check_winner(self.board, self.player1, self.player2)
+        winner = self.manager.get_winner()
+        self.assertEqual(winner, self.player2)
+        self.assertTrue(self.manager.is_game_over())
+        self.assertEqual(self.manager.get_winner(), winner)
+    def test_multiple_winner_checks(self):
+        """Prueba múltiples verificaciones de ganador"""
+        result1 = self.manager.check_winner(self.board, self.player1, self.player2)
+        self.assertFalse(result1)
+        result2 = self.manager.check_winner(self.board, self.player1, self.player2)
+        self.assertFalse(result2)
+        self.board.off["white"] = 15
+        result3 = self.manager.check_winner(self.board, self.player1, self.player2)
+        self.assertTrue(result3)
+    def test_winner_identification(self):
+        """Prueba identificación correcta del ganador por color"""
+        player_red = Player("RedPlayer", "white")
+        player_blue = Player("BluePlayer", "black")
+        self.board.off["black"] = 15
+        self.manager.check_winner(self.board, player_red, player_blue)
+        self.assertEqual(self.manager.get_winner().get_name(), "BluePlayer")
+        self.assertEqual(self.manager.get_winner().get_color(), "black")
+if __name__ == '__main__':
+    unittest.main()
