@@ -24,3 +24,26 @@ class TestGameStateManager(unittest.TestCase):
         self.assertFalse(result)
         self.assertFalse(self.manager.is_game_over())
         self.assertIsNone(self.manager.get_winner())
+    def test_check_winner_white_wins(self):
+        """Prueba verificación cuando ganan las blancas"""
+        self.board.off["white"] = 15
+        result = self.manager.check_winner(self.board, self.player1, self.player2)
+        self.assertTrue(result)
+        self.assertTrue(self.manager.is_game_over())
+        self.assertEqual(self.manager.get_winner(), self.player1)
+    def test_check_winner_black_wins(self):
+        """Prueba verificación cuando ganan las negras"""
+        self.board.off["black"] = 15
+        result = self.manager.check_winner(self.board, self.player1, self.player2)
+        self.assertTrue(result)
+        self.assertTrue(self.manager.is_game_over())
+        self.assertEqual(self.manager.get_winner(), self.player2)
+    def test_reset_game(self):
+        """Prueba reinicio del juego"""
+        self.board.off["white"] = 15
+        self.manager.check_winner(self.board, self.player1, self.player2)
+        self.assertTrue(self.manager.is_game_over())
+        self.assertIsNotNone(self.manager.get_winner())
+        self.manager.reset_game()
+        self.assertFalse(self.manager.is_game_over())
+        self.assertIsNone(self.manager.get_winner())
