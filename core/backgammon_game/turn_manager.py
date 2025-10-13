@@ -86,3 +86,29 @@ class TurnManager:
                 if valid_sequence:
                     return True
         return False
+    def _can_use_any_move_with_die(self, die_value, game_validator, board, color):
+        """Verifica si puede hacer algún movimiento con este dado"""
+        if game_validator.must_enter_from_bar(color):
+            if color == "white":
+                to_pos = die_value
+            else:
+                to_pos = 25 - die_value
+            return game_validator.is_valid_move(25, to_pos, color)
+        for pos in range(1, 25):
+            point = board.get_point(pos)
+            if point and point[0] == color and point[1] > 0:
+                if color == "white":
+                    to_pos = pos + die_value
+                    if to_pos > 24:
+                        to_pos = 0
+                else:
+                    to_pos = pos - die_value
+                    if to_pos < 1:
+                        to_pos = 0
+                
+                if to_pos == 0:
+                    if board.can_bear_off(color):
+                        return True
+                elif game_validator.is_valid_move(pos, to_pos, color):
+                    return True
+        return False
