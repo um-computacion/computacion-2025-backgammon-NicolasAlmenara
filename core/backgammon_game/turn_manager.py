@@ -48,3 +48,41 @@ class TurnManager:
             elif can_use_larger: 
                 return [larger_die]
         return moves  
+    def _can_use_both_dice(self, die1, die2, game_validator, board, color):
+        """Verifica si puede usar ambos dados en algún orden"""
+        if self._can_use_sequence([die1, die2], game_validator, board, color):
+            return True 
+        if self._can_use_sequence([die2, die1], game_validator, board, color):
+            return True
+        return False
+    def _can_use_sequence(self, dice_sequence, game_validator, board, color):
+        """Verifica si puede usar dados en secuencia específica"""
+        for pos in range(1, 25):
+            point = board.get_point(pos)
+            if point and point[0] == color and point[1] > 0:
+                current_pos = pos
+                valid_sequence = True
+                for die in dice_sequence:
+                    if color == "white":
+                        next_pos = current_pos + die
+                        if next_pos > 24:
+                            next_pos = 0
+                    else:
+                        next_pos = current_pos - die
+                        if next_pos < 1:
+                            next_pos = 0
+                    if next_pos == 0:
+                        if not board.can_bear_off(color):
+                            valid_sequence = False
+                            break
+                    else:
+                        next_point = board.get_point(next_pos)
+                        if next_point and next_point[0] != "" and next_point[0] != color and next_point[1] >= 2:
+                            valid_sequence = False
+                            break
+                    current_pos = next_pos
+                    if next_pos == 0:
+                        break
+                if valid_sequence:
+                    return True
+        return False
