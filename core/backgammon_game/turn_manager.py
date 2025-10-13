@@ -112,3 +112,19 @@ class TurnManager:
                 elif game_validator.is_valid_move(pos, to_pos, color):
                     return True
         return False
+    def switch_player(self):
+        """Cambia al siguiente jugador"""
+        self.__current_player__ = self.__player2__ if self.__current_player__ == self.__player1__ else self.__player1__
+        self.__remaining_moves__ = []
+    def get_current_player(self):
+        """Obtiene el jugador actual"""
+        return self.__current_player__
+    def get_remaining_moves(self):
+        """Obtiene movimientos restantes"""
+        return self.__remaining_moves__.copy()
+    def is_turn_complete(self):
+        """Dice si el turno está completo"""
+        return len(self.__remaining_moves__) == 0
+    def has_move(self, die_value):
+        """Verifica si tiene un movimiento disponible"""
+        return die_value in self.__remaining_moves__
