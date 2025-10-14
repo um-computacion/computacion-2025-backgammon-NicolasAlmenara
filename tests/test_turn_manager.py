@@ -65,5 +65,35 @@ class TestTurnManager(unittest.TestCase):
         self.assertTrue(self.turn_manager.has_move(4))
         self.assertFalse(self.turn_manager.has_move(3))
         self.assertFalse(self.turn_manager.has_move(6))
+    def test_switch_player(self):
+        """Prueba cambio de jugador"""
+        initial_player = self.turn_manager.get_current_player()
+        self.assertEqual(initial_player, self.player1)
+        self.turn_manager.switch_player()
+        new_player = self.turn_manager.get_current_player()
+        self.assertEqual(new_player, self.player2)
+        self.turn_manager.switch_player()
+        back_to_first = self.turn_manager.get_current_player()
+        self.assertEqual(back_to_first, self.player1)
+    def test_switch_player_clears_moves(self):
+        """Prueba que cambiar jugador limpia los movimientos"""
+        self.turn_manager.set_moves_from_dice([3, 6], False)
+        self.assertFalse(self.turn_manager.is_turn_complete())
+        self.turn_manager.switch_player()
+        self.assertTrue(self.turn_manager.is_turn_complete())
+        self.assertEqual(len(self.turn_manager.get_remaining_moves()), 0)
+    def test_is_turn_complete(self):
+        """Prueba verificación de turno completo"""
+        self.assertTrue(self.turn_manager.is_turn_complete())
+        self.turn_manager.set_moves_from_dice([2, 5], False)
+        self.assertFalse(self.turn_manager.is_turn_complete())
+        self.turn_manager.use_move(2)
+        self.assertFalse(self.turn_manager.is_turn_complete())
+        self.turn_manager.use_move(5)
+        self.assertTrue(self.turn_manager.is_turn_complete())
+    def test_get_forced_moves_no_moves(self):
+        """Prueba movimientos forzados sin dados"""
+        forced = self.turn_manager.get_forced_moves(self.validator, self.board, "white")
+        self.assertEqual(len(forced), 0)
 if __name__ == '__main__':
     unittest.main()
