@@ -95,5 +95,27 @@ class TestTurnManager(unittest.TestCase):
         """Prueba movimientos forzados sin dados"""
         forced = self.turn_manager.get_forced_moves(self.validator, self.board, "white")
         self.assertEqual(len(forced), 0)
+    def test_get_forced_moves_with_moves(self):
+        """Prueba movimientos forzados con dados disponibles"""
+        self.turn_manager.set_moves_from_dice([3, 5], False)
+        forced = self.turn_manager.get_forced_moves(self.validator, self.board, "white")
+        self.assertIsInstance(forced, list)
+        self.assertGreaterEqual(len(forced), 0)
+    def test_multiple_use_moves(self):
+        """Prueba usar múltiples movimientos"""
+        self.turn_manager.set_moves_from_dice([1, 2, 3], False)  # Simulando dados personalizados
+        self.assertTrue(self.turn_manager.use_move(2))
+        self.assertTrue(self.turn_manager.use_move(1))
+        self.assertFalse(self.turn_manager.use_move(1))  # Ya usado
+        self.assertTrue(self.turn_manager.use_move(3))
+        self.assertTrue(self.turn_manager.is_turn_complete())
+    def test_remaining_moves_copy(self):
+        """Prueba que get_remaining_moves devuelve una copia"""
+        self.turn_manager.set_moves_from_dice([4, 6], False)
+        moves1 = self.turn_manager.get_remaining_moves()
+        moves2 = self.turn_manager.get_remaining_moves()
+        moves1.append(99) 
+        self.assertNotEqual(moves1, moves2)
+        self.assertNotIn(99, moves2)
 if __name__ == '__main__':
     unittest.main()
