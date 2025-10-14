@@ -36,5 +36,34 @@ class TestTurnManager(unittest.TestCase):
         self.assertIn(3, moves)
         self.assertIn(5, moves)
         self.assertEqual(moves, [5, 3])
+    def test_set_moves_from_dice_double(self):
+        """Prueba establecer movimientos desde dados dobles"""
+        self.turn_manager.set_moves_from_dice([4, 4], True)
+        moves = self.turn_manager.get_remaining_moves()
+        self.assertEqual(len(moves), 4)
+        self.assertEqual(moves, [4, 4, 4, 4])
+    def test_use_move_valid(self):
+        """Prueba usar un movimiento válido"""
+        self.turn_manager.set_moves_from_dice([2, 6], False)
+        result = self.turn_manager.use_move(6)
+        self.assertTrue(result)
+        moves = self.turn_manager.get_remaining_moves()
+        self.assertEqual(len(moves), 1)
+        self.assertIn(2, moves)
+        self.assertNotIn(6, moves)
+    def test_use_move_invalid(self):
+        """Prueba usar un movimiento no disponible"""
+        self.turn_manager.set_moves_from_dice([2, 6], False)
+        result = self.turn_manager.use_move(5)
+        self.assertFalse(result)
+        moves = self.turn_manager.get_remaining_moves()
+        self.assertEqual(len(moves), 2)
+    def test_has_move(self):
+        """Prueba verificación de movimientos disponibles"""
+        self.turn_manager.set_moves_from_dice([1, 4], False)
+        self.assertTrue(self.turn_manager.has_move(1))
+        self.assertTrue(self.turn_manager.has_move(4))
+        self.assertFalse(self.turn_manager.has_move(3))
+        self.assertFalse(self.turn_manager.has_move(6))
 if __name__ == '__main__':
     unittest.main()
