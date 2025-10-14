@@ -3,6 +3,20 @@ Todos los cambios van a estar registtrados en este archivo
 El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+## [0.0.23] - 2025-10-11
+
+### Added
+- Se crean los test para la clase `TurnManager`.
+
+---
+
+## [0.0.23] - 2025-10-12
+
+### Added
+- Se crea  la clase `TurnManager` y sus metodos.
+
+---
+
 ## [0.0.22] - 2025-10-11
 
 ### Added
