@@ -116,3 +116,27 @@ class BackgammonGame:
                         elif self.__validator__.is_valid_move(pos, to_pos, color):
                             return True
         return False
+    def get_forced_move_message(self):
+        """Obtiene mensaje sobre movimientos forzados"""
+        current_player = self.__turn_manager__.get_current_player()
+        color = current_player.get_color()
+        forced_moves = self.__turn_manager__.get_forced_moves(self.__validator__, self.__board__, color)
+        all_moves = self.__turn_manager__.get_remaining_moves()
+        if self.__validator__.must_enter_from_bar(color):
+            return "¡DEBES entrar TODAS las fichas desde la barra primero!"
+        if len(forced_moves) < len(all_moves):
+            return f"¡DEBES usar dado(s): {forced_moves}!"
+        return None
+    def get_available_moves(self):
+        """Obtiene movimientos disponibles según reglas"""
+        current_player = self.__turn_manager__.get_current_player()
+        color = current_player.get_color()
+        return self.__turn_manager__.get_forced_moves(self.__validator__, self.__board__, color)
+    def count_checkers_on_bar(self, color):
+        """Cuenta fichas en la barra"""
+        return self.__board__.get_bar_count(color)
+    def reset_game(self):
+        """Coordina el reinicio del juego"""
+        self.__board__ = Board()
+        self.__turn_manager__ = TurnManager(self.__player1__, self.__player2__)
+        self.__state_manager__.reset_game()
