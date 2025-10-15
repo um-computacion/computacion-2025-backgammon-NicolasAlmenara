@@ -74,3 +74,21 @@ class BackgammonGame:
     def switch_turn(self):
         """Coordina el cambio de turno"""
         self.__turn_manager__.switch_player()
+    def get_current_player(self):
+        """Obtiene el jugador actual"""
+        return self.__turn_manager__.get_current_player()
+    def get_remaining_moves(self):
+        """Obtiene movimientos restantes"""
+        return self.__turn_manager__.get_remaining_moves()
+    def is_turn_complete(self):
+        """Verifica si el turno está completo"""
+        return self.__turn_manager__.is_turn_complete()
+    def is_game_over(self):
+        """Verifica si el juego terminó"""
+        return self.__state_manager__.is_game_over()
+    def get_winner(self):
+        """Obtiene el ganador"""
+        return self.__state_manager__.get_winner()
+    def show_board(self):
+        """Muestra el tablero"""
+        self.__board__.show_board()
