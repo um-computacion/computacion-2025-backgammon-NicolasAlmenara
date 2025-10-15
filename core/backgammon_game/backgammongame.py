@@ -41,3 +41,36 @@ class BackgammonGame:
         self.__turn_manager__.use_move(die_value)
         self.__state_manager__.check_winner(self.__board__, self.__player1__, self.__player2__)
         return True
+    def make_compound_move(self, from_pos, dice_list):
+        """Coordina movimiento compuesto usando múltiples dados"""
+        current_player = self.__turn_manager__.get_current_player()
+        color = current_player.get_color()
+        for die in dice_list:
+            if not self.__turn_manager__.has_move(die):
+                return False
+        current_pos = from_pos
+        moves_made = []
+        for die in dice_list:
+            to_pos = self.__calculator__.calculate_destination(current_pos, die, color)
+            if to_pos == 0:
+                if not self.__calculator__.can_bear_off_exact_or_higher(current_pos, die, color, self.__board__):
+                    return False
+            if not self._is_legal_move(current_pos, to_pos, color):
+                return False
+            moves_made.append((current_pos, to_pos, die))
+            current_pos = to_pos
+            if to_pos == 0:
+                break
+        for move_from, move_to, move_die in moves_made:
+            self.__board__.move_checker(move_from, move_to, color)
+            self.__turn_manager__.use_move(move_die)
+        self.__state_manager__.check_winner(self.__board__, self.__player1__, self.__player2__)
+        return True
+    def _is_legal_move(self, from_pos, to_pos, color):
+        """Coordina la validación de movimientos"""
+        if self.__validator__.must_enter_from_bar(color) and from_pos != 25:
+            return False
+        return self.__validator__.is_valid_move(from_pos, to_pos, color)
+    def switch_turn(self):
+        """Coordina el cambio de turno"""
+        self.__turn_manager__.switch_player()
