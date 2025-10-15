@@ -19,5 +19,33 @@ class TestBackgammonGame(unittest.TestCase):
         """Prueba nombres de jugadores personalizados"""
         current_player = self.game.get_current_player()
         self.assertIn(current_player.get_name(), ["TestPlayer1", "TestPlayer2"])
+    def test_roll_dice(self):
+        """Prueba lanzamiento de dados"""
+        values = self.game.roll_dice()
+        self.assertEqual(len(values), 2)
+        for value in values:
+            self.assertGreaterEqual(value, 1)
+            self.assertLessEqual(value, 6)
+    def test_initial_turn_state(self):
+        """Prueba estado inicial del turno"""
+        self.assertTrue(self.game.is_turn_complete())
+        remaining_moves = self.game.get_remaining_moves()
+        self.assertEqual(len(remaining_moves), 0)
+    def test_dice_roll_sets_moves(self):
+        """Prueba que lanzar dados establece movimientos"""
+        values = self.game.roll_dice()
+        remaining_moves = self.game.get_remaining_moves()
+        self.assertGreater(len(remaining_moves), 0)
+        self.assertFalse(self.game.is_turn_complete())
+    def test_switch_turn(self):
+        """Prueba cambio de turno"""
+        initial_player = self.game.get_current_player()
+        self.game.switch_turn()
+        new_player = self.game.get_current_player()
+        self.assertNotEqual(initial_player.get_name(), new_player.get_name())
+    def test_make_move_without_dice(self):
+        """Prueba movimiento sin haber lanzado dados"""
+        result = self.game.make_move(1, 3)
+        self.assertFalse(result)
 if __name__ == "__main__":
     unittest.main()
