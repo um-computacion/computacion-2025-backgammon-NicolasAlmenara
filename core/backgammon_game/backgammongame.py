@@ -92,3 +92,27 @@ class BackgammonGame:
     def show_board(self):
         """Muestra el tablero"""
         self.__board__.show_board()
+    def has_valid_moves(self):
+        """Verifica si el jugador actual tiene movimientos válidos"""
+        current_player = self.__turn_manager__.get_current_player()
+        color = current_player.get_color()
+        remaining_moves = self.__turn_manager__.get_remaining_moves()
+        for die_value in remaining_moves:
+            if self.__validator__.must_enter_from_bar(color):
+                if color == "white":
+                    to_pos = die_value
+                else:
+                    to_pos = 25 - die_value
+                if self.__validator__.is_valid_move(25, to_pos, color):
+                    return True
+            else:
+                for pos in range(1, 25):
+                    point = self.__board__.get_point(pos)
+                    if point and point[0] == color and point[1] > 0:
+                        to_pos = self.__calculator__.calculate_destination(pos, die_value, color)
+                        if to_pos == 0:
+                            if self.__calculator__.can_bear_off_exact_or_higher(pos, die_value, color, self.__board__):
+                                return True
+                        elif self.__validator__.is_valid_move(pos, to_pos, color):
+                            return True
+        return False
