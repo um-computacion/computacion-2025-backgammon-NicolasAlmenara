@@ -47,5 +47,29 @@ class TestBackgammonGame(unittest.TestCase):
         """Prueba movimiento sin haber lanzado dados"""
         result = self.game.make_move(1, 3)
         self.assertFalse(result)
+    def test_make_move_with_dice(self):
+        """Prueba movimiento después de lanzar dados"""
+        self.game.roll_dice()
+        remaining_moves = self.game.get_remaining_moves()
+        if remaining_moves:
+            die_value = remaining_moves[0]
+            result = self.game.make_move(1, die_value)
+            self.assertIsInstance(result, bool)
+    def test_has_valid_moves_initial_position(self):
+        """Prueba verificación de movimientos válidos"""
+        self.game.roll_dice()
+        has_moves = self.game.has_valid_moves()
+        self.assertIsInstance(has_moves, bool)
+    def test_get_available_moves(self):
+        """Prueba obtener movimientos disponibles"""
+        self.game.roll_dice()
+        available_moves = self.game.get_available_moves()
+        self.assertIsInstance(available_moves, list)
+    def test_count_checkers_on_bar_initial(self):
+        """Prueba contar fichas en barra al inicio"""
+        white_count = self.game.count_checkers_on_bar("white")
+        black_count = self.game.count_checkers_on_bar("black")
+        self.assertEqual(white_count, 0)
+        self.assertEqual(black_count, 0)
 if __name__ == "__main__":
     unittest.main()
