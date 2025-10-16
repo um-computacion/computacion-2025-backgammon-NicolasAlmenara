@@ -71,5 +71,28 @@ class TestBackgammonGame(unittest.TestCase):
         black_count = self.game.count_checkers_on_bar("black")
         self.assertEqual(white_count, 0)
         self.assertEqual(black_count, 0)
+    def test_get_forced_move_message_initial(self):
+        """Prueba mensaje de movimientos forzados"""
+        self.game.roll_dice()
+        message = self.game.get_forced_move_message()
+        self.assertTrue(message is None or isinstance(message, str))
+    def test_reset_game(self):
+        """Prueba reinicio del juego"""
+        self.game.roll_dice()
+        self.assertFalse(self.game.is_turn_complete())
+        self.game.reset_game()
+        self.assertFalse(self.game.is_game_over())
+        self.assertIsNone(self.game.get_winner())
+        self.assertTrue(self.game.is_turn_complete())
+    def test_make_compound_move_without_dice(self):
+        """Prueba movimiento compuesto sin dados"""
+        result = self.game.make_compound_move(1, [2, 3])
+        self.assertFalse(result)
+    def test_game_state_consistency(self):
+        """Prueba consistencia del estado del juego"""
+        self.assertFalse(self.game.is_game_over())
+        player = self.game.get_current_player()
+        self.assertIsNotNone(player)
+        self.assertIn(player.get_color(), ["white", "black"])
 if __name__ == "__main__":
     unittest.main()
