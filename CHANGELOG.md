@@ -3,7 +3,70 @@ Todos los cambios van a estar registtrados en este archivo
 El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
-## [0.0.17] - 2025-10-7
+## [0.0.26] - 2025-10-15
+
+### Added
+- Se crean test para  la clase `BackgammonGame`.
+
+---
+
+## [0.0.25] - 2025-10-15
+
+### Added
+- Se crean mas metodos y test para  la clase `BackgammonGame`.
+
+---
+
+## [0.0.24] - 2025-10-14
+
+### Added
+- Se crea la clase `BackgammonGame`, y sus metodos.
+
+---
+
+## [0.0.23] - 2025-10-11
+
+### Added
+- Se crean los test para la clase `TurnManager`.
+
+---
+
+## [0.0.23] - 2025-10-12
+
+### Added
+- Se crea  la clase `TurnManager` y sus metodos.
+
+---
+
+## [0.0.22] - 2025-10-11
+
+### Added
+- Se crea  la clase `GameStateManager`,sus metodos y sus test.
+
+---
+
+## [0.0.21] - 2025-10-10
+
+### Added
+- Se crea  la clase `MoveCalculator`,sus metodos y sus test.
+
+---
+
+## [0.0.20] - 2025-10-9
+
+### Added
+- Se crean los test de la clase `MoveValidator`.
+
+---
+
+## [0.0.19] - 2025-10-8
+
+### Added
+- Se crea la clase `MoveValidator`.
+
+---
+
+## [0.0.18] - 2025-10-7
 
 ### Added
 - Se agregan test para la nueva clase `player`.
