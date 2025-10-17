@@ -7,6 +7,7 @@ El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 - Se crean test para  la clase `BackgammonGame`.
+- Se agregan metodos en la clase `CLI`.
 
 ---
 
