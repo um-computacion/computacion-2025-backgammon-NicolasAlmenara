@@ -3,6 +3,13 @@ Todos los cambios van a estar registtrados en este archivo
 El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+## [0.0.26] - 2025-10-15
+
+### Added
+- Se crean test para  la clase `BackgammonGame`.
+
+---
+
 ## [0.0.25] - 2025-10-15
 
 ### Added
