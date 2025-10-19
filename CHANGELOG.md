@@ -3,10 +3,27 @@ Todos los cambios van a estar registtrados en este archivo
 El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
-## [0.0.26] - 2025-10-15
+## [0.0.28] - 2025-10-19
+
+### Added
+- 
+- Se crean test para `CLI`.
+
+---
+
+## [0.0.27] - 2025-10-18
+
+### Added
+- 
+- Se crea la interfaz por consola de `CLI`.
+
+---
+
+## [0.0.26] - 2025-10-16
 
 ### Added
 - Se crean test para  la clase `BackgammonGame`.
+- Se agregan metodos en la clase `CLI`.
 
 ---
 
