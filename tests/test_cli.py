@@ -1,5 +1,5 @@
 import unittest
-from CLI.cli import CLI
+from cli.cli import CLI
 from core.backgammon_game.backgammongame import BackgammonGame
 class TestCLI(unittest.TestCase):
     def test_cli_initialization(self):
