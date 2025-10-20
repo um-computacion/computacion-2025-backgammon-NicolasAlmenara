@@ -62,5 +62,32 @@ class TestMoveCalculator(unittest.TestCase):
         self.assertEqual(result, 0)
         result = self.calculator.calculate_destination(1, 1, "black")
         self.assertEqual(result, 0)
+    def test_can_bear_off_higher_white(self):
+        """Prueba bearing off con dado mayor para blancas"""
+        for i in range(24):
+            self.board.points[i] = ["", 0]
+        self.board.points[1] = ["white", 1]
+        result = self.calculator.can_bear_off_exact_or_higher(2, 5, "white", self.board)
+        self.assertTrue(result)
+    def test_can_bear_off_higher_black(self):
+        """Prueba bearing off con dado mayor para negras"""
+        for i in range(24):
+            self.board.points[i] = ["", 0]
+        self.board.points[22] = ["black", 1]
+        result = self.calculator.can_bear_off_exact_or_higher(23, 5, "black", self.board)
+        self.assertTrue(result)
+    def test_can_bear_off_blocked_white(self):
+        """Prueba bearing off bloqueado para blancas"""
+        for i in range(24):
+            self.board.points[i] = ["", 0]
+        self.board.points[1] = ["white", 1]
+        self.board.points[3] = ["white", 1]
+        result = self.calculator.can_bear_off_exact_or_higher(2, 6, "white", self.board)
+        self.assertFalse(result)
+    def test_can_bear_off_not_in_home_range(self):
+        """Prueba bearing off fuera del rango home"""
+        self.board.points[10] = ["white", 1]
+        result = self.calculator.can_bear_off_exact_or_higher(11, 3, "white", self.board)
+        self.assertFalse(result)
 if __name__ == '__main__':
     unittest.main()

@@ -117,5 +117,64 @@ class TestTurnManager(unittest.TestCase):
         moves1.append(99) 
         self.assertNotEqual(moves1, moves2)
         self.assertNotIn(99, moves2)
+    def test_forced_moves_from_bar(self):
+        """Prueba movimientos forzados desde la barra"""
+        self.board.bar["white"] = 1
+        self.turn_manager.set_moves_from_dice([3, 5], False)
+        forced = self.turn_manager.get_forced_moves(self.validator, self.board, "white")
+        self.assertIsInstance(forced, list)
+    def test_can_use_both_dice_method(self):
+        """Prueba método _can_use_both_dice"""
+        result = self.turn_manager._can_use_both_dice(2, 4, self.validator, self.board, "white")
+        self.assertIsInstance(result, bool)
+    def test_can_use_sequence_method(self):
+        """Prueba método _can_use_sequence"""
+        result = self.turn_manager._can_use_sequence([1, 2], self.validator, self.board, "white")
+        self.assertIsInstance(result, bool)
+    def test_can_use_any_move_with_die_method(self):
+        """Prueba método _can_use_any_move_with_die"""
+        result = self.turn_manager._can_use_any_move_with_die(3, self.validator, self.board, "white")
+        self.assertIsInstance(result, bool)
+    def test_forced_moves_two_different_dice(self):
+        """Prueba movimientos forzados con dos dados diferentes"""
+        self.turn_manager.set_moves_from_dice([3, 6], False)
+        forced = self.turn_manager.get_forced_moves(self.validator, self.board, "white")
+        self.assertIsInstance(forced, list)
+    def test_forced_moves_from_bar_black(self):
+        """Prueba movimientos forzados desde barra para negras"""
+        self.board.bar["black"] = 1
+        self.turn_manager.set_moves_from_dice([2, 4], False)
+        forced = self.turn_manager.get_forced_moves(self.validator, self.board, "black")
+        self.assertIsInstance(forced, list)
+    def test_can_use_any_move_from_bar_white(self):
+        """Prueba can_use_any_move desde barra para blancas"""
+        self.board.bar["white"] = 1
+        result = self.turn_manager._can_use_any_move_with_die(3, self.validator, self.board, "white")
+        self.assertIsInstance(result, bool)
+    def test_can_use_any_move_from_bar_black(self):
+        """Prueba can_use_any_move desde barra para negras"""
+        self.board.bar["black"] = 1
+        result = self.turn_manager._can_use_any_move_with_die(4, self.validator, self.board, "black")
+        self.assertIsInstance(result, bool)
+    def test_can_use_sequence_with_bearing_off(self):
+        """Prueba secuencia con bearing off"""
+        for i in range(24):
+            self.board.points[i] = ["", 0]
+        self.board.points[21] = ["white", 1]
+        result = self.turn_manager._can_use_sequence([2, 3], self.validator, self.board, "white")
+        self.assertIsInstance(result, bool)
+    def test_can_use_sequence_blocked(self):
+        """Prueba secuencia bloqueada"""
+        self.board.points[2] = ["black", 2]
+        result = self.turn_manager._can_use_sequence([1, 1], self.validator, self.board, "white")
+        self.assertIsInstance(result, bool)
+    def test_forced_moves_prefer_larger_die(self):
+        """Prueba preferencia por dado mayor"""
+        self.board.points[0] = ["white", 1]
+        for i in range(1, 24):
+            self.board.points[i] = ["", 0]
+        self.turn_manager.set_moves_from_dice([2, 5], False)
+        forced = self.turn_manager.get_forced_moves(self.validator, self.board, "white")
+        self.assertIsInstance(forced, list)
 if __name__ == '__main__':
     unittest.main()

@@ -6,15 +6,15 @@ El formato esta basado[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [0.0.28] - 2025-10-19
 
 ### Added
-- 
-- Se crean test para `CLI`.
+
+- Se crean test para `CLI`, `Board` y `MoveValidator`.
 
 ---
 
 ## [0.0.27] - 2025-10-18
 
 ### Added
-- 
+
 - Se crea la interfaz por consola de `CLI`.
 
 ---

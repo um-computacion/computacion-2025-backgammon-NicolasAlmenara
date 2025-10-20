@@ -52,5 +52,15 @@ class TestMoveValidator(unittest.TestCase):
         """Prueba movimiento de bearing off (posición 0)"""
         result = self.validator.is_valid_move(1, 0, "white")
         self.assertIsInstance(result, bool)
+    def test_destination_blocked_by_enemy(self):
+        """Prueba destino bloqueado por fichas enemigas"""
+        self.board.points[2] = ["black", 2]
+        result = self.validator.is_valid_move(1, 3, "white")
+        self.assertFalse(result)
+    def test_destination_with_single_enemy(self):
+        """Prueba destino con una sola ficha enemiga (captura válida)"""
+        self.board.points[4] = ["black", 1]
+        result = self.validator.is_valid_move(1, 5, "white")
+        self.assertTrue(result)
 if __name__ == '__main__':
     unittest.main()
