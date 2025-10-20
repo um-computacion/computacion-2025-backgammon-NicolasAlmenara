@@ -73,7 +73,6 @@ class Board:
             else:
                 top_line += " .  "
         print(top_line)
-        
         print("   " + "-" * 48)
         bar_info = ""
         if self.__bar__["white"] > 0:
@@ -83,7 +82,6 @@ class Board:
         if not bar_info:
             bar_info = "vacía"
         print(f"BARRA: {bar_info:^42}")
-        
         print("   " + "-" * 48)
         bottom_line = "   "
         for i in range(11, -1, -1):
