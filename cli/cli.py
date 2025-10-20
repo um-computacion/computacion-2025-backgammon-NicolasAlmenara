@@ -29,6 +29,7 @@ class CLI:
         moves = self.__game__.get_remaining_moves()
         if not self.__game__.has_valid_moves():
             print("No hay movimientos válidos. Turno perdido.")
+            self.__game__.switch_turn()
             return
         while moves and not self.__game__.is_game_over():
             available_moves = self.__game__.get_available_moves()
@@ -79,7 +80,8 @@ class CLI:
             except (ValueError, KeyboardInterrupt):
                 print("Entrada inválida")
                 break
-        self.__game__.switch_turn()
+        if not self.__game__.get_remaining_moves():
+            self.__game__.switch_turn()
 if __name__ == "__main__":
     cli = CLI()
     cli.start()
