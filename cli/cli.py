@@ -14,7 +14,9 @@ class CLI:
     def play_game(self):
         """Ciclo principal del juego"""
         while not self.__game__.is_game_over():
-            self.play_turn()
+            result = self.play_turn()
+            if result == "exit":
+                return
         winner = self.__game__.get_winner()
         print(f"\n¡{winner.get_name()} GANÓ!")
     def play_turn(self):
@@ -47,7 +49,8 @@ class CLI:
                 print("Opciones:")
                 print("1. Usar UN dado en UNA ficha")
                 print("2. Usar VARIOS dados en LA MISMA ficha")
-                option = input("¿Qué quieres hacer? (1/2): ").strip()
+                print("3. SALIR del juego")
+                option = input("¿Qué quieres hacer? (1/2/3): ").strip()
                 if option == "1":
                     from_pos = int(input("¿Desde qué posición? (1-24, 25=barra): "))
                     print(f"Dados disponibles: {available_moves}")
@@ -65,6 +68,10 @@ class CLI:
                         print(f"Moviste ficha desde {from_pos} usando dados {dice_list}")
                     else:
                         print("Movimiento compuesto no válido")
+                elif option == "3":
+                    print("\n¡Gracias por jugar!")
+                    print("Juego terminado.")
+                    return "exit"
                 else:
                     print("Opción inválida")
                     continue
