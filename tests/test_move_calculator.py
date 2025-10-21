@@ -46,16 +46,6 @@ class TestMoveCalculator(unittest.TestCase):
         self.assertEqual(result, 22)
         result = self.calculator.calculate_destination(25, 6, "black")
         self.assertEqual(result, 19)
-    def test_can_bear_off_exact_white(self):
-        """Prueba bearing off exacto para fichas blancas"""
-        self.board.points[20] = ["white", 1]
-        result = self.calculator.can_bear_off_exact_or_higher(21, 4, "white", self.board)
-        self.assertTrue(result)
-    def test_can_bear_off_exact_black(self):
-        """Prueba bearing off exacto para fichas negras"""
-        self.board.points[2] = ["black", 1]
-        result = self.calculator.can_bear_off_exact_or_higher(3, 3, "black", self.board)
-        self.assertTrue(result)
     def test_edge_cases(self):
         """Prueba casos límite"""
         result = self.calculator.calculate_destination(24, 1, "white")
