@@ -48,7 +48,7 @@ class Board:
         """Dice si el jugador puede sacar fichas"""
         if self.has_checkers_on_bar(color):
             return False
-        home_range = range(1, 7) if color == "white" else range(19, 25)
+        home_range = range(19, 25) if color == "white" else range(1, 7)
         for i in range(24):
             point = self.__points__[i]
             if point[0] == color and point[1] > 0:
@@ -122,4 +122,3 @@ class Board:
     def off(self):
         """Acceso a las fichas fuera del tablero"""
         return self.__off__
-        

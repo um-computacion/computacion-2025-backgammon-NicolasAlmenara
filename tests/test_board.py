@@ -189,18 +189,18 @@ class TestBoard(unittest.TestCase):
             self.board.points[i] = ["", 0]
         self.board.bar[color] = 0
         if color == "white":
-            self.board.points[0] = ["white", 3]
-            self.board.points[1] = ["white", 3]
-            self.board.points[2] = ["white", 3]
-            self.board.points[3] = ["white", 3]
-            self.board.points[4] = ["white", 2]
-            self.board.points[5] = ["white", 1]
+            self.board.points[18] = ["white", 3]
+            self.board.points[19] = ["white", 3]
+            self.board.points[20] = ["white", 3]
+            self.board.points[21] = ["white", 3]
+            self.board.points[22] = ["white", 2]
+            self.board.points[23] = ["white", 1]
         else:
-            self.board.points[18] = ["black", 3]
-            self.board.points[19] = ["black", 3]
-            self.board.points[20] = ["black", 3]
-            self.board.points[21] = ["black", 3]
-            self.board.points[22] = ["black", 2]
-            self.board.points[23] = ["black", 1]
+            self.board.points[0] = ["black", 3]
+            self.board.points[1] = ["black", 3]
+            self.board.points[2] = ["black", 3]
+            self.board.points[3] = ["black", 3]
+            self.board.points[4] = ["black", 2]
+            self.board.points[5] = ["black", 1]
 if __name__ == '__main__':
     unittest.main()

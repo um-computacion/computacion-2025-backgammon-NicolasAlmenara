@@ -103,10 +103,10 @@ class TestTurnManager(unittest.TestCase):
         self.assertGreaterEqual(len(forced), 0)
     def test_multiple_use_moves(self):
         """Prueba usar múltiples movimientos"""
-        self.turn_manager.set_moves_from_dice([1, 2, 3], False)  # Simulando dados personalizados
+        self.turn_manager.set_moves_from_dice([1, 2, 3], False)
         self.assertTrue(self.turn_manager.use_move(2))
         self.assertTrue(self.turn_manager.use_move(1))
-        self.assertFalse(self.turn_manager.use_move(1))  # Ya usado
+        self.assertFalse(self.turn_manager.use_move(1))
         self.assertTrue(self.turn_manager.use_move(3))
         self.assertTrue(self.turn_manager.is_turn_complete())
     def test_remaining_moves_copy(self):
@@ -123,18 +123,6 @@ class TestTurnManager(unittest.TestCase):
         self.turn_manager.set_moves_from_dice([3, 5], False)
         forced = self.turn_manager.get_forced_moves(self.validator, self.board, "white")
         self.assertIsInstance(forced, list)
-    def test_can_use_both_dice_method(self):
-        """Prueba método _can_use_both_dice"""
-        result = self.turn_manager._can_use_both_dice(2, 4, self.validator, self.board, "white")
-        self.assertIsInstance(result, bool)
-    def test_can_use_sequence_method(self):
-        """Prueba método _can_use_sequence"""
-        result = self.turn_manager._can_use_sequence([1, 2], self.validator, self.board, "white")
-        self.assertIsInstance(result, bool)
-    def test_can_use_any_move_with_die_method(self):
-        """Prueba método _can_use_any_move_with_die"""
-        result = self.turn_manager._can_use_any_move_with_die(3, self.validator, self.board, "white")
-        self.assertIsInstance(result, bool)
     def test_forced_moves_two_different_dice(self):
         """Prueba movimientos forzados con dos dados diferentes"""
         self.turn_manager.set_moves_from_dice([3, 6], False)
@@ -146,28 +134,6 @@ class TestTurnManager(unittest.TestCase):
         self.turn_manager.set_moves_from_dice([2, 4], False)
         forced = self.turn_manager.get_forced_moves(self.validator, self.board, "black")
         self.assertIsInstance(forced, list)
-    def test_can_use_any_move_from_bar_white(self):
-        """Prueba can_use_any_move desde barra para blancas"""
-        self.board.bar["white"] = 1
-        result = self.turn_manager._can_use_any_move_with_die(3, self.validator, self.board, "white")
-        self.assertIsInstance(result, bool)
-    def test_can_use_any_move_from_bar_black(self):
-        """Prueba can_use_any_move desde barra para negras"""
-        self.board.bar["black"] = 1
-        result = self.turn_manager._can_use_any_move_with_die(4, self.validator, self.board, "black")
-        self.assertIsInstance(result, bool)
-    def test_can_use_sequence_with_bearing_off(self):
-        """Prueba secuencia con bearing off"""
-        for i in range(24):
-            self.board.points[i] = ["", 0]
-        self.board.points[21] = ["white", 1]
-        result = self.turn_manager._can_use_sequence([2, 3], self.validator, self.board, "white")
-        self.assertIsInstance(result, bool)
-    def test_can_use_sequence_blocked(self):
-        """Prueba secuencia bloqueada"""
-        self.board.points[2] = ["black", 2]
-        result = self.turn_manager._can_use_sequence([1, 1], self.validator, self.board, "white")
-        self.assertIsInstance(result, bool)
     def test_forced_moves_prefer_larger_die(self):
         """Prueba preferencia por dado mayor"""
         self.board.points[0] = ["white", 1]

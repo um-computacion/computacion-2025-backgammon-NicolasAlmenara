@@ -62,5 +62,10 @@ class TestMoveValidator(unittest.TestCase):
         self.board.points[4] = ["black", 1]
         result = self.validator.is_valid_move(1, 5, "white")
         self.assertTrue(result)
+    def test_destination_same_color(self):
+        """Prueba destino con fichas del mismo color"""
+        self.board.points[2] = ["white", 1] 
+        result = self.validator.is_valid_move(1, 3, "white")
+        self.assertTrue(result)
 if __name__ == '__main__':
     unittest.main()
