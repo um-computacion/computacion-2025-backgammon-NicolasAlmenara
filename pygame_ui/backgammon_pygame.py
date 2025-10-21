@@ -75,3 +75,69 @@ def render_board(screen, game, font):
     hitmap[26] = pygame.Rect(bear_off_x, MARGIN, bear_off_width, HEIGHT // 2 - MARGIN)
     draw_info(screen, game, font)
     return hitmap
+def draw_point(screen, x, y_base, board_idx, board, is_top, hitmap):
+    """Dibuja un triángulo y las fichas"""
+    visual_pos = board_idx + 1
+    color = BROWN_DARK if ((visual_pos - 1) // 6 + visual_pos) % 2 == 0 else BROWN_LIGHT
+    if is_top:
+        points = [(x, y_base),
+                  (x + POINT_WIDTH, y_base),
+                  (x + POINT_WIDTH//2, y_base + POINT_HEIGHT)]
+    else:
+        points = [(x, y_base + POINT_HEIGHT),
+                  (x + POINT_WIDTH, y_base + POINT_HEIGHT),
+                  (x + POINT_WIDTH//2, y_base)]
+    pygame.draw.polygon(screen, color, points)
+    pygame.draw.polygon(screen, BLACK, points, 2)
+    hitmap[board_idx] = pygame.Rect(x, y_base if not is_top else y_base, POINT_WIDTH, POINT_HEIGHT)
+    point = board.get_point(board_idx + 1)  # get_point usa 1-24
+    if point and point[1] > 0:
+        checker_color = WHITE if point[0] == "white" else BLACK
+        border_color = BLACK if point[0] == "white" else WHITE
+        count = point[1]
+        for i in range(count):
+            cx = x + POINT_WIDTH // 2
+            if is_top:
+                cy = y_base + 20 + i * (CHECKER_RADIUS * 2 + 5)
+            else:
+                cy = y_base + POINT_HEIGHT - 20 - i * (CHECKER_RADIUS * 2 + 5)
+            
+            pygame.draw.circle(screen, checker_color, (cx, cy), CHECKER_RADIUS)
+            pygame.draw.circle(screen, border_color, (cx, cy), CHECKER_RADIUS, 2)
+def draw_info(screen, game, font):
+    """Dibuja información del juego en el lado derecho"""
+    info_x = MARGIN + 12 * POINT_WIDTH + 150
+    small_font = pygame.font.SysFont(None, 18)
+    player = game.get_current_player()
+    info = f"Turno: {player.get_name()}"
+    text = small_font.render(info, True, BLACK)
+    screen.blit(text, (info_x, HEIGHT // 2 - 60))
+    color_text = f"({player.get_color()})"
+    text = small_font.render(color_text, True, BLACK)
+    screen.blit(text, (info_x, HEIGHT // 2 - 40))
+    moves = game.get_remaining_moves()
+    if moves:
+        dice_text = f"Dados: {moves}"
+        text = small_font.render(dice_text, True, BLACK)
+        screen.blit(text, (info_x, HEIGHT // 2 - 15))
+        board = game.__board__
+        color = player.get_color()
+        if board.has_checkers_on_bar(color):
+            tiny_font = pygame.font.SysFont(None, 16)
+            warn1 = tiny_font.render("¡FICHA EN", True, RED)
+            warn2 = tiny_font.render("EL BAR!", True, RED)
+            warn3 = tiny_font.render("Debes", True, RED)
+            warn4 = tiny_font.render("sacarla", True, RED)
+            warn5 = tiny_font.render("primero", True, RED)
+            screen.blit(warn1, (info_x, HEIGHT // 2 + 15))
+            screen.blit(warn2, (info_x, HEIGHT // 2 + 30))
+            screen.blit(warn3, (info_x, HEIGHT // 2 + 45))
+            screen.blit(warn4, (info_x, HEIGHT // 2 + 60))
+            screen.blit(warn5, (info_x, HEIGHT // 2 + 75))
+    else:
+        text = small_font.render("Presiona", True, RED)
+        screen.blit(text, (info_x, HEIGHT // 2 - 10))
+        text2 = small_font.render("ESPACIO", True, RED)
+        screen.blit(text2, (info_x, HEIGHT // 2 + 5))
+        text3 = small_font.render("para tirar", True, RED)
+        screen.blit(text3, (info_x, HEIGHT // 2 + 20))
