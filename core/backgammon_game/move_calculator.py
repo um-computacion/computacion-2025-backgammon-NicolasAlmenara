@@ -18,27 +18,26 @@ class MoveCalculator:
             return 0 if to_pos > 24 else to_pos
         else:
             to_pos = from_pos - die_value
-            return 0 if to_pos < 1 else to_pos
+            return 0 if to_pos < 1 else to_pos 
     def can_bear_off_exact_or_higher(self, from_pos, die_value, color, board):
         """Verifica si puede sacar ficha exacta o con dado mayor"""
         if color == "white":
-            home_pos = from_pos
+            home_pos = 25 - from_pos
             if home_pos == die_value:
                 return True
-            if home_pos < die_value and home_pos <= 6:
-                for i in range(home_pos + 1, 7):
+            if home_pos < die_value and from_pos >= 19:
+                for i in range(from_pos + 1, 25):
                     point = board.get_point(i)
                     if point and point[0] == color and point[1] > 0:
                         return False
                 return True
         else:
-            home_pos = 25 - from_pos
+            home_pos = from_pos
             if home_pos == die_value:
                 return True
-            if home_pos < die_value and from_pos >= 19:
-                for i in range(home_pos + 1, 7):
-                    check_pos = 25 - i
-                    point = board.get_point(check_pos)
+            if home_pos < die_value and home_pos <= 6:
+                for i in range(1, home_pos):
+                    point = board.get_point(i)
                     if point and point[0] == color and point[1] > 0:
                         return False
                 return True

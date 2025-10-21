@@ -19,7 +19,7 @@ class TestMoveCalculator(unittest.TestCase):
     def test_calculate_black_normal_move(self):
         """Prueba cálculo de movimiento normal para fichas negras"""
         result = self.calculator.calculate_destination(24, 3, "black")
-        self.assertEqual(result, 21) 
+        self.assertEqual(result, 21)
         result = self.calculator.calculate_destination(15, 5, "black")
         self.assertEqual(result, 10)
     def test_calculate_white_bearing_off(self):
@@ -48,13 +48,13 @@ class TestMoveCalculator(unittest.TestCase):
         self.assertEqual(result, 19)
     def test_can_bear_off_exact_white(self):
         """Prueba bearing off exacto para fichas blancas"""
-        self.board.points[2] = ["white", 1]
-        result = self.calculator.can_bear_off_exact_or_higher(3, 3, "white", self.board)
+        self.board.points[20] = ["white", 1]
+        result = self.calculator.can_bear_off_exact_or_higher(21, 4, "white", self.board)
         self.assertTrue(result)
     def test_can_bear_off_exact_black(self):
         """Prueba bearing off exacto para fichas negras"""
-        self.board.points[21] = ["black", 1]
-        result = self.calculator.can_bear_off_exact_or_higher(22, 3, "black", self.board)
+        self.board.points[2] = ["black", 1]
+        result = self.calculator.can_bear_off_exact_or_higher(3, 3, "black", self.board)
         self.assertTrue(result)
     def test_edge_cases(self):
         """Prueba casos límite"""
@@ -66,15 +66,15 @@ class TestMoveCalculator(unittest.TestCase):
         """Prueba bearing off con dado mayor para blancas"""
         for i in range(24):
             self.board.points[i] = ["", 0]
-        self.board.points[1] = ["white", 1]
-        result = self.calculator.can_bear_off_exact_or_higher(2, 5, "white", self.board)
+        self.board.points[19] = ["white", 1]
+        result = self.calculator.can_bear_off_exact_or_higher(20, 6, "white", self.board)
         self.assertTrue(result)
     def test_can_bear_off_higher_black(self):
         """Prueba bearing off con dado mayor para negras"""
         for i in range(24):
             self.board.points[i] = ["", 0]
-        self.board.points[22] = ["black", 1]
-        result = self.calculator.can_bear_off_exact_or_higher(23, 5, "black", self.board)
+        self.board.points[1] = ["black", 1]
+        result = self.calculator.can_bear_off_exact_or_higher(2, 5, "black", self.board)
         self.assertTrue(result)
     def test_can_bear_off_blocked_white(self):
         """Prueba bearing off bloqueado para blancas"""

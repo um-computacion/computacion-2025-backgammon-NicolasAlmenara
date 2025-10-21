@@ -84,10 +84,6 @@ class TestBackgammonGame(unittest.TestCase):
         self.assertFalse(self.game.is_game_over())
         self.assertIsNone(self.game.get_winner())
         self.assertTrue(self.game.is_turn_complete())
-    def test_make_compound_move_without_dice(self):
-        """Prueba movimiento compuesto sin dados"""
-        result = self.game.make_compound_move(1, [2, 3])
-        self.assertFalse(result)
     def test_game_state_consistency(self):
         """Prueba consistencia del estado del juego"""
         self.assertFalse(self.game.is_game_over())
@@ -106,13 +102,6 @@ class TestBackgammonGame(unittest.TestCase):
         """Prueba validación de movimientos legales"""
         result = self.game._is_legal_move(1, 2, "white")
         self.assertIsInstance(result, bool)
-    def test_compound_move_with_dice(self):
-        """Prueba movimiento compuesto con dados"""
-        self.game.roll_dice()
-        moves = self.game.get_remaining_moves()
-        if len(moves) >= 2:
-            result = self.game.make_compound_move(1, moves[:2])
-            self.assertIsInstance(result, bool)
     def test_has_valid_moves_after_roll(self):
         """Prueba has_valid_moves después de lanzar dados"""
         self.game.roll_dice()
@@ -139,20 +128,6 @@ class TestBackgammonGame(unittest.TestCase):
         except:
             success = True
         self.assertTrue(success)
-    def test_compound_move_bearing_off(self):
-        """Prueba movimiento compuesto con bearing off"""
-        self.game.roll_dice()
-        moves = self.game.get_remaining_moves()
-        if moves:
-            result = self.game.make_compound_move(22, moves)
-            self.assertIsInstance(result, bool)
-    def test_compound_move_execution_loop(self):
-        """Prueba ejecución del loop en movimiento compuesto"""
-        self.game.roll_dice()
-        moves = self.game.get_remaining_moves()
-        if len(moves) >= 2:
-            result = self.game.make_compound_move(1, moves[:1])
-            self.assertIsInstance(result, bool)
     def test_has_valid_moves_bar_scenario(self):
         """Prueba has_valid_moves desde barra"""
         self.game.roll_dice()
@@ -163,8 +138,9 @@ class TestBackgammonGame(unittest.TestCase):
         self.game.roll_dice()
         message = self.game.get_forced_move_message()
         self.assertTrue(message is None or isinstance(message, str))
+        
         self.game.roll_dice()
         message2 = self.game.get_forced_move_message()
         self.assertTrue(message2 is None or isinstance(message2, str))
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

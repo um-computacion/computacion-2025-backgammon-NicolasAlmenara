@@ -33,8 +33,7 @@ class CLI:
             return
         while moves and not self.__game__.is_game_over():
             available_moves = self.__game__.get_available_moves()
-            print(f"Dados lanzados: {moves}")
-            print(f"Puedes usar: {available_moves}")
+            print(f"\nDados disponibles: {available_moves}")
             forced_message = self.__game__.get_forced_move_message()
             if forced_message:
                 print(f" {forced_message}")
@@ -44,32 +43,26 @@ class CLI:
                 print(f"Tienes {bar_count} fichas en la barra")
             if not self.__game__.has_valid_moves():
                 print("No quedan movimientos válidos.")
-                break
+                self.__game__.switch_turn()
+                return
             try:
                 print(f"\n Tienes {len(moves)} movimiento(s) restante(s)")
                 print("Opciones:")
-                print("1. Usar UN dado en UNA ficha")
-                print("2. Usar VARIOS dados en LA MISMA ficha")
-                print("3. SALIR del juego")
-                option = input("¿Qué quieres hacer? (1/2/3): ").strip()
+                print("1. Usar un dado")
+                print("2. SALIR del juego")
+                option = input("¿Qué quieres hacer? (1/2): ").strip()
                 if option == "1":
                     from_pos = int(input("¿Desde qué posición? (1-24, 25=barra): "))
-                    print(f"Dados disponibles: {available_moves}")
                     die_value = int(input("¿Qué dado usar?: "))
                     if self.__game__.make_move(from_pos, die_value):
                         print(f"Moviste ficha desde {from_pos} usando dado {die_value}")
+                        moves = self.__game__.get_remaining_moves()
+                        if moves:
+                            print("\nTablero actualizado:")
+                            self.__game__.show_board()
                     else:
                         print("Movimiento no válido")
                 elif option == "2":
-                    from_pos = int(input("¿Desde qué posición? (1-24, 25=barra): "))
-                    print(f"Dados disponibles: {available_moves}")
-                    dice_input = input("¿Qué dados usar en esta ficha? (ej: 6,4 o 6): ")
-                    dice_list = [int(x.strip()) for x in dice_input.split(",")]
-                    if self.__game__.make_compound_move(from_pos, dice_list):
-                        print(f"Moviste ficha desde {from_pos} usando dados {dice_list}")
-                    else:
-                        print("Movimiento compuesto no válido")
-                elif option == "3":
                     print("\n¡Gracias por jugar!")
                     print("Juego terminado.")
                     return "exit"
@@ -79,9 +72,10 @@ class CLI:
                 moves = self.__game__.get_remaining_moves()
             except (ValueError, KeyboardInterrupt):
                 print("Entrada inválida")
-                break
+                continue
         if not self.__game__.get_remaining_moves():
             self.__game__.switch_turn()
 if __name__ == "__main__":
     cli = CLI()
     cli.start()
+
