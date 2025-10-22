@@ -2,7 +2,7 @@ import pygame
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from core.backgammon_game.backgammongame import BackgammonGam
+from core.backgammon_game.backgammongame import BackgammonGame
 """constantes"""
 WIDTH, HEIGHT = 1000, 700
 MARGIN = 40
@@ -141,3 +141,130 @@ def draw_info(screen, game, font):
         screen.blit(text2, (info_x, HEIGHT // 2 + 5))
         text3 = small_font.render("para tirar", True, RED)
         screen.blit(text3, (info_x, HEIGHT // 2 + 20))
+def hit_test(hitmap, pos):
+    """Detecta qué punto fue clickeado"""
+    for idx, rect in hitmap.items():
+        if rect.collidepoint(pos):
+            return idx
+    return None
+def main():
+    pygame.init()
+    pygame.display.set_caption("Backgammon")
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    clock = pygame.time.Clock()
+    font = pygame.font.SysFont(None, 24)
+    names = []
+    for prompt in ["Jugador 1 (Blancas)", "Jugador 2 (Negras)"]:
+        name = ""
+        entering = True
+        while entering:
+            screen.fill(BG)
+            title_font = pygame.font.SysFont(None, 36)
+            title = title_font.render(prompt, True, BLACK)
+            screen.blit(title, title.get_rect(center=(WIDTH//2, HEIGHT//2 - 50)))
+            name_text = title_font.render(name + "_", True, BLACK)
+            screen.blit(name_text, name_text.get_rect(center=(WIDTH//2, HEIGHT//2)))
+            instr = font.render("Presiona ENTER para continuar", True, BLACK)
+            screen.blit(instr, instr.get_rect(center=(WIDTH//2, HEIGHT//2 + 60)))
+            pygame.display.flip()
+            for e in pygame.event.get():
+                if e.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif e.type == pygame.KEYDOWN:
+                    if e.key == pygame.K_RETURN:
+                        entering = False
+                    elif e.key == pygame.K_BACKSPACE:
+                        name = name[:-1]
+                    elif e.unicode.isprintable() and len(name) < 20:
+                        name += e.unicode
+        names.append(name if name else f"Player {len(names) + 1}")
+    game = BackgammonGame(names[0], names[1])
+    hitmap = {}
+    selected = None
+    no_moves_message = None
+    message_timer = 0
+    running = True
+    while running:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                running = False
+            elif e.type == pygame.KEYDOWN:
+                if e.key in (pygame.K_ESCAPE, pygame.K_q):
+                    running = False
+                elif e.key == pygame.K_SPACE and not game.get_remaining_moves():
+                    game.roll_dice()
+                    if not game.has_valid_moves():
+                        print("Sin movimientos válidos")
+                        no_moves_message = "¡Sin movimientos válidos! Pasando turno..."
+                        message_timer = 180
+                        game.switch_turn()
+            elif e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+                if game.get_remaining_moves():
+                    idx = hit_test(hitmap, e.pos)
+                    if idx is not None:
+                        from_pos = 25 if idx == 24 else idx + 1
+                        if selected is None:
+                            selected = from_pos
+                            print(f"Origen: {from_pos}" + (" (BAR)" if from_pos == 25 else ""))
+                        else:
+                            if idx == 24:
+                                to_pos = 25
+                            elif idx == 25 or idx == 26:
+                                to_pos = 0
+                            else:
+                                to_pos = idx + 1
+                            if selected == 25:
+                                current_player = game.get_current_player()
+                                if current_player.get_color() == "white":
+                                    die_value = to_pos
+                                else:
+                                    die_value = 25 - to_pos
+                            elif to_pos == 0:
+                                current_player = game.get_current_player()
+                                remaining_moves = game.get_remaining_moves()
+                                success = False
+                                for die_value in remaining_moves:
+                                    if game.make_move(selected, die_value):
+                                        print(f"Movimiento: {selected} -> OFF (dado {die_value})")
+                                        if not game.get_remaining_moves():
+                                            game.switch_turn()
+                                        success = True
+                                        break
+                                if not success:
+                                    print("Movimiento inválido")
+                                selected = None
+                                continue
+                            else:
+                                die_value = abs(to_pos - selected)
+                            if game.make_move(selected, die_value):
+                                dest_text = "OFF" if to_pos == 0 else str(to_pos)
+                                print(f"Movimiento: {selected} -> {dest_text} (dado {die_value})")
+                                if not game.get_remaining_moves():
+                                    game.switch_turn()
+                            else:
+                                print("Movimiento inválido")
+                            selected = None
+        hitmap = render_board(screen, game, font)
+        if message_timer > 0:
+            message_timer -= 1
+            title_font = pygame.font.SysFont(None, 36)
+            text = title_font.render(no_moves_message, True, RED)
+            text_rect = text.get_rect(center=(WIDTH//2, HEIGHT//2))
+            bg_rect = text_rect.inflate(40, 20)
+            bg_surface = pygame.Surface((bg_rect.width, bg_rect.height))
+            bg_surface.fill(WHITE)
+            bg_surface.set_alpha(220)
+            screen.blit(bg_surface, bg_rect)
+            screen.blit(text, text_rect)
+        if game.is_game_over():
+            winner = game.get_winner()
+            title_font = pygame.font.SysFont(None, 48)
+            text = title_font.render(f"¡{winner.get_name()} GANÓ!", True, RED)
+            screen.blit(text, text.get_rect(center=(WIDTH//2, HEIGHT//2)))
+        pygame.display.flip()
+        clock.tick(60)
+    pygame.quit()
+    sys.exit()
+if __name__ == "__main__":
+    main()
