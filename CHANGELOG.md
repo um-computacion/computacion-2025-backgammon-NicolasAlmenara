@@ -1,8 +1,14 @@
 # Changelog
 Todos los cambios importantes de este proyecto se documentarán en este archivo.
+El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
-El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/),
-y este proyecto se adhiere a [Semantic Versioning](https://semver.org/lang/es/spec/v2.0.0.html).
+## [0.0.34] - 2024-10-23
+### Added
+- Se agrega el diagrama de clases.
+
+## [0.0.33] - 2024-10-22
+### Added
+- Se agrega documentacion.
 
 ## [0.0.32] - 2024-10-21
 ### Changed
@@ -94,7 +100,7 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/lang/es/sp
 
 ## [0.0.13] - 2024-09-23
 ### Added
-- Se agregan tests: test_get_position, test_is_move_valid, test_move_checker_invalid_color, test_move_checker_to_pos_ocupado.
+- Se agregan tests: test_get_position, test_is_move_valid, test_move_checker_invalid_color,  test_move_checker_to_pos_ocupado.
 
 ## [0.0.12] - 2024-09-22
 ### Added
