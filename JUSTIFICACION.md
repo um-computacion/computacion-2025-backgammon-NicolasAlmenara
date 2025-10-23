@@ -390,3 +390,5 @@ def __init__(self, board):  # Recibe board, no lo crea internamente
 - **Razón**: Demuestra OCP - nueva UI sin cambiar core
 
 ---
+## 9. Diagrama de clases
+![alt text](image.png)
