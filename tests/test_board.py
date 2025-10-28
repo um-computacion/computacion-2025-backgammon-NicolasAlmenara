@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from core.board import Board
 class TestBoard(unittest.TestCase):
     def setUp(self):
@@ -159,30 +160,33 @@ class TestBoard(unittest.TestCase):
         self.assertIsNone(self.board.is_winner())
     def test_show_board_runs(self):
         """Verifica que show_board se ejecuta sin errores"""
-        try:
-            self.board.show_board()
-            success = True
-        except Exception:
-            success = False
-        self.assertTrue(success)
+        with patch('builtins.print'):
+            try:
+                self.board.show_board()
+                success = True
+            except Exception:
+                success = False
+            self.assertTrue(success)
     def test_show_board_with_bar_checkers(self):
         """Verifica show_board con fichas en la barra"""
         self.board.bar["white"] = 2
         self.board.bar["black"] = 1
-        try:
-            self.board.show_board()
-            success = True
-        except Exception:
-            success = False
-        self.assertTrue(success)
+        with patch('builtins.print'):
+            try:
+                self.board.show_board()
+                success = True
+            except Exception:
+                success = False
+            self.assertTrue(success)
     def test_show_board_empty_bar(self):
         """Verifica show_board con barra vacía"""
-        try:
-            self.board.show_board()
-            success = True
-        except Exception:
-            success = False
-        self.assertTrue(success)
+        with patch('builtins.print'):
+            try:
+                self.board.show_board()
+                success = True
+            except Exception:
+                success = False
+            self.assertTrue(success)
         self.assertTrue(success)
     def _setup_all_checkers_in_home(self, color):
         for i in range(24):
