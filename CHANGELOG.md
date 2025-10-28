@@ -1,6 +1,11 @@
 # Changelog
 Todos los cambios importantes de este proyecto se documentarán en este archivo.
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
+## [0.0.35] - 2024-10-28
+### Added
+- Se agrega documentacion.
+### Fixed
+- Se arregla los test, para que no impriman el board cuando se ejecutan.
 
 ## [0.0.34] - 2024-10-23
 ### Added

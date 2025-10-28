@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from core.backgammon_game.backgammongame import BackgammonGame
 class TestBackgammonGame(unittest.TestCase):
     def setUp(self):
@@ -92,12 +93,13 @@ class TestBackgammonGame(unittest.TestCase):
         self.assertIn(player.get_color(), ["white", "black"])
     def test_show_board_method(self):
         """Prueba que show_board funciona"""
-        try:
-            self.game.show_board()
-            success = True
-        except:
-            success = False
-        self.assertTrue(success)
+        with patch('builtins.print'):
+            try:
+                self.game.show_board()
+                success = True
+            except:
+                success = False
+            self.assertTrue(success)
     def test_legal_move_validation(self):
         """Prueba validación de movimientos legales"""
         result = self.game._is_legal_move(1, 2, "white")

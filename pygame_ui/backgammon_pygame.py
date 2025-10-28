@@ -90,7 +90,7 @@ def draw_point(screen, x, y_base, board_idx, board, is_top, hitmap):
     pygame.draw.polygon(screen, color, points)
     pygame.draw.polygon(screen, BLACK, points, 2)
     hitmap[board_idx] = pygame.Rect(x, y_base if not is_top else y_base, POINT_WIDTH, POINT_HEIGHT)
-    point = board.get_point(board_idx + 1)  # get_point usa 1-24
+    point = board.get_point(board_idx + 1)
     if point and point[1] > 0:
         checker_color = WHITE if point[0] == "white" else BLACK
         border_color = BLACK if point[0] == "white" else WHITE
