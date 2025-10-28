@@ -180,3 +180,101 @@ Respuesta de la ia: "    def test_can_bear_off_with_checkers_outside_home(self):
 La salida fue utilizada sin cambios.
 referencia: tests/test_board.py
 
+Claude Sonnet - version 4.5
+Texto exacto del prompt: "necesito testear el CLI pero sin que se ejecute el juego real, como hago con los mocks?"
+Respuesta de la ia: "    @patch('cli.cli.BackgammonGame')
+    @patch.object(CLI, 'play_game')
+    @patch('builtins.print')
+    @patch('builtins.input', side_effect=['Alice', 'Bob'])
+    def test_start_with_names(self, input_mock, print_mock, play_game_mock, game_mock):
+        cli = CLI()
+        cli.start()
+        game_mock.assert_called_once_with('Alice', 'Bob')
+        play_game_mock.assert_called_once()"
+La salida fue utilizada sin cambios.
+referencia: tests/test_cli.py
+
+Claude Sonnet - version 4.5
+Texto exacto del prompt: "como testeo que cuando el jugador no tiene movimientos validos se cambia de turno automaticamente?"
+Respuesta de la ia: "    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_play_turn_no_valid_moves(self, input_mock, print_mock):
+        cli = CLI()
+        mock_game = Mock(spec=BackgammonGame)
+        cli.__game__ = mock_game
+        player_mock = Mock()
+        player_mock.get_name.return_value = 'Alice'
+        player_mock.get_color.return_value = 'white'
+        mock_game.get_current_player.return_value = player_mock
+        mock_game.roll_dice.return_value = [3, 5]
+        mock_game.has_valid_moves.return_value = False
+        mock_game.get_remaining_moves.return_value = [3, 5]
+        result = cli.play_turn()
+        mock_game.switch_turn.assert_called_once()
+        self.assertIsNone(result)"
+La salida fue utilizada sin cambios.
+referencia: tests/test_cli.py
+
+Claude Sonnet - version 4.5
+Texto exacto del prompt: "como verifico que play_game se detiene cuando play_turn devuelve exit?"
+Respuesta de la ia: "    @patch.object(CLI, 'play_turn', return_value='exit')
+    @patch('builtins.print')
+    def test_play_game_exit(self, print_mock, play_turn_mock):
+        cli = CLI()
+        mock_game = Mock(spec=BackgammonGame)
+        cli.__game__ = mock_game
+        mock_game.is_game_over.return_value = False
+        cli.play_game()
+        play_turn_mock.assert_called_once()"
+La salida fue utilizada sin cambios.
+referencia: tests/test_cli.py
+
+Claude Sonnet - version 4.5
+Texto exacto del prompt: "necesito testear que el CLI maneja bien cuando el usuario ingresa letras en vez de numeros"
+Respuesta de la ia: "    @patch('builtins.print')
+    @patch('builtins.input', side_effect=['1', 'abc', '1', '12', '3'])
+    def test_play_turn_invalid_input(self, input_mock, print_mock):
+        cli = CLI()
+        mock_game = Mock(spec=BackgammonGame)
+        cli.__game__ = mock_game
+        player_mock = Mock()
+        player_mock.get_name.return_value = 'Alice'
+        player_mock.get_color.return_value = 'white'
+        mock_game.get_current_player.return_value = player_mock
+        mock_game.roll_dice.return_value = [3, 5]
+        mock_game.get_remaining_moves.side_effect = [[3, 5], [5], []]
+        mock_game.has_valid_moves.side_effect = [True, True, False]
+        mock_game.get_available_moves.return_value = [3, 5]
+        mock_game.get_forced_move_message.return_value = None
+        mock_game.count_checkers_on_bar.return_value = 0
+        mock_game.make_move.return_value = True
+        mock_game.is_game_over.return_value = False
+        result = cli.play_turn()
+        self.assertIsNone(result)"
+La salida fue utilizada sin cambios.
+referencia: tests/test_cli.py
+
+Claude Sonnet - version 4.5
+Texto exacto del prompt: "como testeo que cuando el usuario elige opcion 2 el juego retorna exit correctamente?"
+Respuesta de la ia: "    @patch('builtins.print')
+    @patch('builtins.input', side_effect=['2'])
+    def test_play_turn_exit_option(self, input_mock, print_mock):
+        cli = CLI()
+        mock_game = Mock(spec=BackgammonGame)
+        cli.__game__ = mock_game
+        player_mock = Mock()
+        player_mock.get_name.return_value = 'Alice'
+        player_mock.get_color.return_value = 'white'
+        mock_game.get_current_player.return_value = player_mock
+        mock_game.roll_dice.return_value = [3, 5]
+        mock_game.get_remaining_moves.return_value = [3, 5]
+        mock_game.has_valid_moves.return_value = True
+        mock_game.get_available_moves.return_value = [3, 5]
+        mock_game.get_forced_move_message.return_value = None
+        mock_game.count_checkers_on_bar.return_value = 0
+        mock_game.is_game_over.return_value = False
+        result = cli.play_turn()
+        self.assertEqual(result, 'exit')"
+La salida fue utilizada sin cambios.
+referencia: tests/test_cli.py
+

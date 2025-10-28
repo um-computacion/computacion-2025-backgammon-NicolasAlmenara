@@ -4,6 +4,7 @@ El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/
 ## [0.0.35] - 2024-10-28
 ### Added
 - Se agrega documentacion.
+- Se agregan los test test_cli_initialization, test_start_with_names, test_start_default_names, test_play_game_until_over, test_play_game_exit, test_play_turn_no_valid_moves, test_play_turn_exit_option y test_play_turn_invalid_input. 
 ### Fixed
 - Se arregla los test, para que no impriman el board cuando se ejecutan.
 

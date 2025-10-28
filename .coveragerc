@@ -4,7 +4,6 @@ omit =
     */__pycache__/*
     __pycache__/*
     assets/*
-    */cli.py
     */pygame_ui/*
     */prompts-*.md
     */README.md
